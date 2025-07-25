@@ -9,6 +9,7 @@
             padding: 0;
             font-family: Arial, sans-serif;
             background: #f9f9f9;
+            padding-bottom: 80px;
         }
         .message-form {
             position: fixed;
@@ -45,13 +46,21 @@
             background: #6c757d;
             cursor: not-allowed;
         }
-        .chat-response {
+        .chat-message {
             margin: 16px;
             padding: 12px;
-            background: #e9ecef;
             border-radius: 12px;
-            color: #333;
             max-width: 80%;
+        }
+        .user-message {
+            background: #007bff;
+            color: white;
+            margin-left: auto;
+            margin-right: 16px;
+        }
+        .bot-message {
+            background: #e9ecef;
+            color: #333;
         }
         .error {
             background: #f8d7da;
@@ -63,11 +72,15 @@
             color: #856404;
             border: 1px solid #ffeaa7;
         }
+        #chat-container {
+            max-height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body>
     <div id="chat-container">
-        <div id="response" class="chat-response" style="display:none;"></div>
+        <!-- Chat history will be loaded here -->
     </div>
     <form class="message-form" id="messageForm">
         <input type="text" class="message-input" id="messageInput" placeholder="Type your message..." autocomplete="off" />
@@ -76,22 +89,67 @@
     <script>
         const form = document.getElementById('messageForm');
         const input = document.getElementById('messageInput');
-        const responseDiv = document.getElementById('response');
+        const chatContainer = document.getElementById('chat-container');
         const sendBtn = document.getElementById('sendBtn');
+
+        // Load chat history on page load
+        async function loadChatHistory() {
+            try {
+                const response = await fetch('/chatbot/history');
+                const data = await response.json();
+                
+                if (response.ok && data.history) {
+                    data.history.forEach(message => {
+                        addMessageToChat(message.content, message.role);
+                    });
+                }
+            } catch (error) {
+                console.error('Failed to load chat history:', error);
+            }
+        }
+
+        // Add message to chat display
+        function addMessageToChat(content, role) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${role === 'user' ? 'user-message' : 'bot-message'}`;
+            messageDiv.textContent = content;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Show loading message
+        function showLoading() {
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'chat-message loading';
+            loadingDiv.textContent = 'Thinking...';
+            loadingDiv.id = 'loading-message';
+            chatContainer.appendChild(loadingDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Remove loading message
+        function removeLoading() {
+            const loadingDiv = document.getElementById('loading-message');
+            if (loadingDiv) {
+                loadingDiv.remove();
+            }
+        }
 
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
             const userMessage = input.value.trim();
             
             if (userMessage) {
+                // Add user message to chat
+                addMessageToChat(userMessage, 'user');
+                
                 // Show loading state
-                responseDiv.textContent = "Thinking...";
-                responseDiv.className = "chat-response loading";
-                responseDiv.style.display = "block";
+                showLoading();
                 
                 // Disable form while processing
                 sendBtn.disabled = true;
                 input.disabled = true;
+                input.value = "";
                 
                 try {
                     const response = await fetch('/chatbot/prompt', {
@@ -106,25 +164,35 @@
                     
                     const data = await response.json();
                     
+                    removeLoading();
+                    
                     if (response.ok) {
-                        responseDiv.textContent = data.response;
-                        responseDiv.className = "chat-response";
+                        addMessageToChat(data.response, 'assistant');
                     } else {
-                        responseDiv.textContent = `Error: ${data.error}`;
-                        responseDiv.className = "chat-response error";
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'chat-message error';
+                        errorDiv.textContent = `Error: ${data.error}`;
+                        chatContainer.appendChild(errorDiv);
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
                     }
                 } catch (error) {
-                    responseDiv.textContent = `Network error: ${error.message}`;
-                    responseDiv.className = "chat-response error";
+                    removeLoading();
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'chat-message error';
+                    errorDiv.textContent = `Network error: ${error.message}`;
+                    chatContainer.appendChild(errorDiv);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
                 } finally {
                     // Re-enable form
                     sendBtn.disabled = false;
                     input.disabled = false;
-                    input.value = "";
                     input.focus();
                 }
             }
         });
+
+        // Load chat history when page loads
+        window.addEventListener('load', loadChatHistory);
     </script>
 </body>
 </html>

@@ -23,6 +23,13 @@ def chatbot_prompt():
         return jsonify({'response': response})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+@app.route('/chatbot/history', methods=['GET'])
+def chatbot_history():
+    try:
+        return jsonify({'history': chatbot.history})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/', methods=['GET'])
 def chat():

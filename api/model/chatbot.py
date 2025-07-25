@@ -21,6 +21,7 @@ class Chatbot:
         api_db_path = os.path.join(project_root, "api_rag_milvus.db")
         self.retriever = RagRetriever(db_path=api_db_path)
         self.generator = RagGenerator(self.llm)
+        self.history = []
 
         system_template = (
             "You are an expert assistant helping a university student with questions about image processing. "
@@ -77,10 +78,9 @@ class Chatbot:
             msg for msg in state["messages"] 
             if isinstance(msg, (HumanMessage, AIMessage))
         ]
-        
+
         # If conversation history is too long, summarize it
         if len(conversation_history) >= 8:
-            print(conversation_history)
             # Prepare clean history for summarization (remove metadata)
             clean_history = [
                 {"role": "user" if isinstance(msg, HumanMessage) else "assistant", 
@@ -119,9 +119,15 @@ class Chatbot:
         
         # Create input state with the user message
         input_state = {"messages": [{"role": "user", "content": user_prompt}]}
-        
+
+        self.history.append(str(user_prompt))
+
         # Invoke the workflow
         result = await asyncio.to_thread(self.app.invoke, input_state, config)
         
+        output = result["messages"][-1].content
+
+        self.history.append(str(output))
+
         # Return the last message content
-        return result["messages"][-1].content
+        return output
