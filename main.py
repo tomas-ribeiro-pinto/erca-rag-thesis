@@ -43,6 +43,12 @@ async def main():
             [("system", system_template), ("user", "{user_prompt}")]
         )
 
+        # response = retriever.vector_store.similarity_search_with_score(
+        #     query="Binary image", k=15
+        # )
+        # print("Retrieved documents:", response)
+
+
         while True:
             user_prompt = input("\nAsk a question (or type 'exit' to quit): ")
             if user_prompt.lower() == 'exit':
@@ -52,6 +58,10 @@ async def main():
             prompt = prompt_template.invoke({"user_prompt": user_prompt, "context": "\n\n".join([doc.page_content for doc in docs])})
             response = await asyncio.to_thread(generator.invoke, prompt)
             print(response.content)
+            if not docs:
+                print("No relevant documents found.")
+            else:
+                print(f"Found {len(docs)} relevant documents:")
             #print("Retrieved documents:", "\n\n".join([doc.page_content for doc in docs]))
         
     except Exception as e:
