@@ -12,7 +12,7 @@ from langchain_unstructured import UnstructuredLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 class RagRetriever:
-    def __init__(self):
+    def __init__(self, db_path=None):
         # Suppress verbose logging
         logging.getLogger("unstructured").setLevel(logging.WARNING)
         os.environ["GRPC_VERBOSITY"] = "ERROR"
@@ -25,7 +25,13 @@ class RagRetriever:
         self.chunk_size = 1024
         self.chunk_overlap = 15
 
-        URI = "./rag_milvus.db"
+        # Use absolute path to avoid working directory issues
+        if db_path is None:
+            # Default to project root directory
+            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            db_path = os.path.join(project_root, "rag_milvus.db")
+        
+        URI = db_path
 
         self.vector_store = Milvus(
             embedding_function= self.embeddings,

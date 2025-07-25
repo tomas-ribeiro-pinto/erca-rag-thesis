@@ -1,2 +1,9 @@
 /documents
 /__pycache__
+/api/__pycache__
+/api/model/__pycache__
+/chatbot/__pycache__
+chatbot/rag_milvus.db
+Pipfile.lock
+Pipfile
+.api_rag_milvus.db.lock

@@ -27,7 +27,7 @@ async def main():
             print(f"Error: File path {documents_path} is not a valid directory.")
             return
     else:
-        retriever = RagRetriever()
+        retriever = RagRetriever(db_path)
         print(f"Using existing vector store at {db_path}")
     generator = RagGenerator(llm)
     
