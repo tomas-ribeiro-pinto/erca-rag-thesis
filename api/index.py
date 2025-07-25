@@ -1,5 +1,5 @@
 import asyncio
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 
 from api.model.user_prompt import UserPrompt, UserPromptSchema
 from api.model.chatbot_output import ChatbotOutput, ChatbotOutputSchema
@@ -23,6 +23,10 @@ def chatbot_prompt():
         return jsonify({'response': response})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@app.route('/', methods=['GET'])
+def chat():
+    return render_template('my-form.html')
 
 if __name__ == "__main__":
     app.run()

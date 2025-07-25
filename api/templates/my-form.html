@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Message Form</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+        }
+        .message-form {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            padding: 10px;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+            display: flex;
+            gap: 8px;
+        }
+        .message-input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+        .send-btn {
+            padding: 0 18px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .send-btn:active {
+            background: #0056b3;
+        }
+        .send-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        .chat-response {
+            margin: 16px;
+            padding: 12px;
+            background: #e9ecef;
+            border-radius: 12px;
+            color: #333;
+            max-width: 80%;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .loading {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="response" class="chat-response" style="display:none;"></div>
+    </div>
+    <form class="message-form" id="messageForm">
+        <input type="text" class="message-input" id="messageInput" placeholder="Type your message..." autocomplete="off" />
+        <button type="submit" class="send-btn" id="sendBtn">Send</button>
+    </form>
+    <script>
+        const form = document.getElementById('messageForm');
+        const input = document.getElementById('messageInput');
+        const responseDiv = document.getElementById('response');
+        const sendBtn = document.getElementById('sendBtn');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const userMessage = input.value.trim();
+            
+            if (userMessage) {
+                // Show loading state
+                responseDiv.textContent = "Thinking...";
+                responseDiv.className = "chat-response loading";
+                responseDiv.style.display = "block";
+                
+                // Disable form while processing
+                sendBtn.disabled = true;
+                input.disabled = true;
+                
+                try {
+                    const response = await fetch('/chatbot/prompt', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            prompt: userMessage
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        responseDiv.textContent = data.response;
+                        responseDiv.className = "chat-response";
+                    } else {
+                        responseDiv.textContent = `Error: ${data.error}`;
+                        responseDiv.className = "chat-response error";
+                    }
+                } catch (error) {
+                    responseDiv.textContent = `Network error: ${error.message}`;
+                    responseDiv.className = "chat-response error";
+                } finally {
+                    // Re-enable form
+                    sendBtn.disabled = false;
+                    input.disabled = false;
+                    input.value = "";
+                    input.focus();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
