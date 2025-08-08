@@ -1,4 +1,5 @@
 import asyncio
+import sqlite3
 from flask import Flask, jsonify, request, render_template
 
 from api.model.user_prompt import UserPrompt, UserPromptSchema
@@ -26,10 +27,22 @@ def chatbot_prompt():
     
 @app.route('/chatbot/history', methods=['GET'])
 def chatbot_history():
+    con = sqlite3.connect(chatbot.history_db_path)
+    cur = con.cursor()
     try:
-        return jsonify({'history': chatbot.history})
+        res = cur.execute('''
+            SELECT * FROM user_history WHERE user_id = ? AND chatbot_id = ?
+        ''', ("guest_user", "rag_chatbot"))
+
+        output = [dict((cur.description[i][0], value) \
+            for i, value in enumerate(row)) for row in cur.fetchall()]
+
+        return jsonify({'history': output})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+    finally:
+        con.close()
 
 @app.route('/', methods=['GET'])
 def chat():
