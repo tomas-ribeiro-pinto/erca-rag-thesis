@@ -87,6 +87,8 @@
         <button type="submit" class="send-btn" id="sendBtn">Send</button>
     </form>
     <script>
+        var chatbot_id = '{{ chatbot_id }}';
+        var user_id = '{{ user_id }}';
         const form = document.getElementById('messageForm');
         const input = document.getElementById('messageInput');
         const chatContainer = document.getElementById('chat-container');
@@ -95,7 +97,7 @@
         // Load chat history on page load
         async function loadChatHistory() {
             try {
-                const response = await fetch('/chatbot/history');
+                const response = await fetch(`/chatbot/${chatbot_id}/history?user_id=${user_id}`);
                 const data = await response.json();
                 
                 if (response.ok && data.history) {
@@ -152,7 +154,7 @@
                 input.value = "";
                 
                 try {
-                    const response = await fetch('/chatbot/prompt', {
+                    const response = await fetch(`/chatbot/${chatbot_id}/prompt?user_id=${user_id}`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

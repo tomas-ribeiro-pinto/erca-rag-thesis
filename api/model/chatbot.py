@@ -11,18 +11,20 @@ import sqlite3
 import os
 
 class Chatbot:
-    def __init__(self):
+    def __init__(self, instance, chatbot_api_db_path="./databases/chatbot_instances.db"):
+        self.chatbot_id = instance["chatbot_id"]
         self.llm = ChatOllama(
-            model = "llama3.1",
-            temperature = 0.8,
-            num_predict = 4096,
+            model = instance["llm_model"],
+            temperature = instance["temperature"],
+            num_predict = instance["num_predict"],
         )
+
         # Use a separate database file for the API to avoid conflicts
         project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        api_db_path = os.path.join(project_root, "api_rag_milvus.db")
+        api_db_path = os.path.join(project_root, instance["vector_db_path"])
         self.retriever = RagRetriever(db_path=api_db_path)
         self.generator = RagGenerator(self.llm)
-        self.history_db_path = os.path.join(project_root, "chatbot_api.db")
+        self.user_history_db_path = os.path.join(project_root, chatbot_api_db_path)
 
         system_template = (
             "You are an expert assistant helping a university student with questions about image processing. "
@@ -46,8 +48,6 @@ class Chatbot:
         # Add simple in-memory checkpointer
         memory = MemorySaver()
         self.app = self.workflow.compile(checkpointer=memory)
-
-        self.initialise_sqlite_database()
 
     def call_model(self, state: MessagesState):
         """Define the function that calls the model with RAG context"""
@@ -116,78 +116,31 @@ class Chatbot:
 
         return {"messages": message_updates}
     
-    async def get_response(self, user_prompt, thread_id="default"):
+    async def get_response(self, user_id, user_prompt, thread_id="default"):
         """Get response using the LangGraph workflow"""
         config = {"configurable": {"thread_id": thread_id}}
         
         # Create input state with the user message
         input_state = {"messages": [{"role": "user", "content": user_prompt}]}
 
-        self.add_message_to_history(str(user_prompt), "user")
+        self.add_message_to_history(user_id, str(user_prompt), "user")
 
         # Invoke the workflow
         result = await asyncio.to_thread(self.app.invoke, input_state, config)
         
         output = result["messages"][-1].content
 
-        self.add_message_to_history(str(output), "assistant")
+        self.add_message_to_history(user_id, str(output), "assistant")
 
         # Return the last message content
         return output
     
-    def add_message_to_history(self, content, role):
-        con = sqlite3.connect(self.history_db_path)
+    def add_message_to_history(self, user_id, content, role):
+        con = sqlite3.connect(self.user_history_db_path)
         cur = con.cursor()
         cur.execute('''
             INSERT INTO user_history (user_id, chatbot_id, content, role)
             VALUES (?, ?, ?, ?)
-        ''', ("guest_user", "rag_chatbot", content, role))
-        con.commit()
-        con.close()
-    
-    def initialise_sqlite_database(self):
-        con = sqlite3.connect(self.history_db_path)
-        cur = con.cursor()
-        cur.execute('''
-            CREATE TABLE IF NOT EXISTS user_history (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id TEXT NOT NULL,
-                chatbot_id TEXT NOT NULL,
-                content TEXT NOT NULL,
-                role TEXT NOT NULL,
-                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-            )
-        ''')
-        res = cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='user_history'")
-        if res.fetchone() is None:
-            print("Table 'user_history' was not created successfully.")
-            con.close()
-            return
-        else:
-            print("Table 'user_history' is ready for use.")
-
-        cur.execute('''
-            CREATE TABLE IF NOT EXISTS chatbot_instances (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                llm_model TEXT NOT NULL,
-                temperature REAL NOT NULL,
-                num_predict INTEGER NOT NULL,
-                db_path TEXT NOT NULL,
-                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-        ''')
-
-        res = cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='chatbot_instances'")
-        if res.fetchone() is None:
-            print("Table 'chatbot_instances' was not created successfully.")
-            con.close()
-            return
-        else:
-            print("Table 'chatbot_instances' is ready for use.")
-
-        # cur.execute('''
-        #     INSERT INTO chatbot_instances (llm_model, temperature, num_predict, db_path)
-        #     VALUES (?, ?, ?, ?)
-        # ''', (self.llm.model, self.llm.temperature, self.llm.num_predict, self.retriever.vector_store.connection_args["uri"]))
-
+        ''', (user_id, self.chatbot_id, content, role))
         con.commit()
         con.close()
