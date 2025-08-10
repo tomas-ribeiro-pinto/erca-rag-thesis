@@ -7,3 +7,4 @@ chatbot/rag_milvus.db
 Pipfile.lock
 Pipfile
 .api_rag_milvus.db.lock
+Miniconda3-latest-MacOSX-x86_64.sh

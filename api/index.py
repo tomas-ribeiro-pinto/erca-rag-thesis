@@ -21,7 +21,9 @@ def chatbot_prompt(chatbot_id):
     chatbot = available_chatbots.get(chatbot_id)
     if not chatbot:
         return jsonify({'error': 'Chatbot not found'}), 404
-    user_id = request.args.get('user_id', '1')  # Default to 'guest_user ID'
+    user_email = request.args.get('user_email', None)
+    user_id = get_user_id(user_email)
+
     try:
         data = request.get_json()
         user_prompt = data.get('prompt', '')
@@ -41,9 +43,11 @@ def chatbot_history(chatbot_id):
     chatbot = available_chatbots.get(chatbot_id)
     if not chatbot:
         return jsonify({'error': 'Chatbot not found'}), 404
-    
-    user_id = request.args.get('user_id', '1')  # Default to 'guest_user ID'
-    print(f"Retrieving history for user_id: {user_id}, chatbot_id: {chatbot_id}")
+
+    user_email = request.args.get('user_email', None)  # Default to 'guest_user ID'
+    user_id = get_user_id(user_email)
+
+    print(f"Retrieving history for user_email: {user_email}, chatbot_id: {chatbot_id}")
     con = sqlite3.connect(CHATBOT_API_DB_PATH)
     cur = con.cursor()
     try:
@@ -70,9 +74,41 @@ def chat(chatbot_id):
     chatbot = available_chatbots.get(chatbot_id)
     if not chatbot:
         return jsonify({'error': 'Chatbot not found'}), 404
-    
-    user_id = request.args.get('user_id', '1')  # Get user_id from query params
-    return render_template('my-form.html', chatbot_id=chatbot_id, user_id=user_id)
+
+    user_email = request.args.get('user_email', None)  # Get user_email from query params
+    return render_template('my-form.html', chatbot_id=chatbot_id, user_email=user_email)
+
+# TODO: Improve user creation logic
+def create_user(username="guest_user", user_email="guest@example.com", chatbot_id=1):
+    con = sqlite3.connect(CHATBOT_API_DB_PATH)
+    cur = con.cursor()
+    cur.execute('''
+        INSERT INTO users (username, email) VALUES (?, ?)
+    ''', (username, user_email,))
+    cur.execute('''
+        INSERT INTO user_history (user_id, chatbot_id, content, role)
+        VALUES ((SELECT id FROM users WHERE email = ?), ?, ?, ?)
+    ''', (user_email, chatbot_id, "Hello! I’m your assistant for image processing. I can help you understand concepts like filters, transformations, segmentation, and more – all based on the information I’ve been given. If you have a specific question or need some clarification, just let me know. Let’s get started!", "assistant"))
+    con.commit()
+    con.close()
+    print(f"User {username} created with email {user_email}")
+
+def get_user_id(user_email):
+    """Retrieve user ID based on email, create user if not exists"""
+    con = sqlite3.connect(CHATBOT_API_DB_PATH)
+    cur = con.cursor()
+    res = cur.execute('SELECT id FROM users WHERE email = ?', (user_email,))
+    user_id = res.fetchone()
+    if user_id:
+        con.close()
+        return user_id[0]
+    else:
+        create_user(user_email=user_email)
+        # Fetch the user id again after creation
+        res = cur.execute('SELECT id FROM users WHERE email = ?', (user_email,))
+        user_id = res.fetchone()
+        con.close()
+        return user_id[0] if user_id else None
 
 if __name__ == "__main__":
     app.run()
