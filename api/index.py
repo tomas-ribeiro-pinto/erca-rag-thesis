@@ -1,69 +1,32 @@
+"""
+================================================================================
+RAG Chatbot API for Education - Thesis Project
+--------------------------------------------------------------------------------
+Author: Tomás Pinto
+Date: August 2025
+Description:
+    This file implements an API for interacting with multiple chatbot
+    instances. It provides endpoints for sending prompts to chatbots, retrieving
+    chat history, listing available chatbots, and rendering a chat interface.
+    User management and chat history are handled via a SQLite database.
+================================================================================
+"""
+
 import asyncio
 import sqlite3
-from api import initialise_app
 
-from flask import Flask, jsonify, request, render_template
+from api.controllers.user_controller import UserController
+from flask import jsonify, request, render_template
+from flask import current_app as app
 
-from api.model.user_prompt import UserPrompt, UserPromptSchema
-from api.model.chatbot_output import ChatbotOutput, ChatbotOutputSchema
-from api.model.chatbot import Chatbot
-
-CHATBOT_API_DB_PATH = "./databases/chatbot_instances.db"
-
-app = Flask(__name__)
+from api import initialise_app, get_available_chatbots
+from api.models.chatbot import Chatbot
 
 # Initialize the app and load chatbots
-global available_chatbots
-available_chatbots = initialise_app()
+app = initialise_app()
 
-@app.route('/chatbot/<chatbot_id>/prompt', methods=['POST'])
-def chatbot_prompt(chatbot_id):
-    chatbot = available_chatbots.get(chatbot_id)
-    if not chatbot:
-        return jsonify({'error': 'Chatbot not found'}), 404
-    user_email = request.args.get('user_email', None)
-    user_id = get_user_id(user_email)
-
-    try:
-        data = request.get_json()
-        user_prompt = data.get('prompt', '')
-        
-        if not user_prompt:
-            return jsonify({'error': 'No prompt provided'}), 400
-        
-        response = asyncio.run(chatbot.get_response(user_id, user_prompt))
-        
-        return jsonify({'response': response})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-@app.route('/chatbot/<chatbot_id>/history', methods=['GET'])
-def chatbot_history(chatbot_id):
-    """Retrieve chat history for a specific chatbot"""
-    chatbot = available_chatbots.get(chatbot_id)
-    if not chatbot:
-        return jsonify({'error': 'Chatbot not found'}), 404
-
-    user_email = request.args.get('user_email', None)  # Default to 'guest_user ID'
-    user_id = get_user_id(user_email)
-
-    print(f"Retrieving history for user_email: {user_email}, chatbot_id: {chatbot_id}")
-    con = sqlite3.connect(CHATBOT_API_DB_PATH)
-    cur = con.cursor()
-    try:
-        res = cur.execute('''
-            SELECT * FROM user_history WHERE user_id = ? AND chatbot_id = ?
-        ''', (user_id, chatbot_id))
-
-        output = [dict((cur.description[i][0], value) \
-            for i, value in enumerate(row)) for row in cur.fetchall()]
-
-        return jsonify({'history': output})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-    
-    finally:
-        con.close()
+with app.app_context():
+    available_chatbots = get_available_chatbots()
 
 @app.route('/', methods=['GET'])
 def get_available_chatbots():
@@ -71,6 +34,9 @@ def get_available_chatbots():
 
 @app.route('/chatbot/<chatbot_id>', methods=['GET'])
 def chat(chatbot_id):
+    """
+        Render the chat interface for a specific chatbot.
+    """
     chatbot = available_chatbots.get(chatbot_id)
     if not chatbot:
         return jsonify({'error': 'Chatbot not found'}), 404
@@ -78,37 +44,66 @@ def chat(chatbot_id):
     user_email = request.args.get('user_email', None)  # Get user_email from query params
     return render_template('my-form.html', chatbot_id=chatbot_id, user_email=user_email)
 
-# TODO: Improve user creation logic
-def create_user(username="guest_user", user_email="guest@example.com", chatbot_id=1):
-    con = sqlite3.connect(CHATBOT_API_DB_PATH)
-    cur = con.cursor()
-    cur.execute('''
-        INSERT INTO users (username, email) VALUES (?, ?)
-    ''', (username, user_email,))
-    cur.execute('''
-        INSERT INTO user_history (user_id, chatbot_id, content, role)
-        VALUES ((SELECT id FROM users WHERE email = ?), ?, ?, ?)
-    ''', (user_email, chatbot_id, "Hello! I’m your assistant for image processing. I can help you understand concepts like filters, transformations, segmentation, and more – all based on the information I’ve been given. If you have a specific question or need some clarification, just let me know. Let’s get started!", "assistant"))
-    con.commit()
-    con.close()
-    print(f"User {username} created with email {user_email}")
+@app.route('/chatbot/<chatbot_id>/prompt', methods=['POST'])
+def prompt_to_chatbot(chatbot_id):
+    """
+        Prompt a chatbot with a user message and return the response.
+    """
+    chatbot = available_chatbots.get(chatbot_id)
+    if not chatbot:
+        return jsonify({'error': 'Chatbot not found'}), 404
 
-def get_user_id(user_email):
-    """Retrieve user ID based on email, create user if not exists"""
-    con = sqlite3.connect(CHATBOT_API_DB_PATH)
-    cur = con.cursor()
-    res = cur.execute('SELECT id FROM users WHERE email = ?', (user_email,))
-    user_id = res.fetchone()
-    if user_id:
-        con.close()
-        return user_id[0]
+    user = get_user_from_request(request, chatbot_id)
+    user_id = user['id']
+
+    try:
+        data = request.get_json()
+        user_prompt = data.get('prompt', '')
+        
+        if not user_prompt:
+            return jsonify({'error': 'No prompt provided'}), 400
+
+        # Send the prompt to the chatbot
+        response = asyncio.run(chatbot.get_response(user_id, user_prompt))
+        
+        return jsonify({'response': response})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/chatbot/<chatbot_id>/history', methods=['POST'])
+def get_chatbot_history(chatbot_id):
+    """Retrieve chat history for a specific chatbot"""
+    chatbot = available_chatbots.get(chatbot_id)
+    if not chatbot:
+        return jsonify({'error': 'Chatbot not found'}), 404
+    
+    user = get_user_from_request(request, chatbot_id)
+
+    print(f"Retrieving history for user_email: {user['email']}, chatbot_id: {chatbot_id}")
+    try:
+        output = UserController.get_user_history(user['id'], chatbot_id)
+
+        if len(output) == 0:
+            UserController.register_user_with_chatbot(user['id'], chatbot_id, user['username'])
+
+        return jsonify({'history': output})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+def get_user_from_request(request, chatbot_id):
+    data = request.get_json()
+    user_email = data.get('user_email', None)
+    user_name = data.get('user_name', "")
+
+    if user_email is None or user_email == "" or user_email == "None":
+        user = UserController.get_guest_user(chatbot_id)
     else:
-        create_user(user_email=user_email)
-        # Fetch the user id again after creation
-        res = cur.execute('SELECT id FROM users WHERE email = ?', (user_email,))
-        user_id = res.fetchone()
-        con.close()
-        return user_id[0] if user_id else None
+        user = UserController.get_user_by_email(user_email)
+        if user is None:
+            UserController.create_user(username=user_name, user_email=user_email)
+            user = UserController.get_user_by_email(user_email)
+            UserController.register_user_with_chatbot(user['id'], chatbot_id, user_name)
+    return user
 
 if __name__ == "__main__":
     app.run()

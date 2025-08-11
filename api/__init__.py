@@ -1,109 +1,75 @@
+"""
+================================================================================
+RAG Chatbot API for Education - Thesis Project
+--------------------------------------------------------------------------------
+Author: Tomás Pinto
+Date: August 2025
+Description:
+    This file loads the configuration settings and initializes the application.
+    It sets up logging, initializes the SQLite database, and loads available chatbots.
+================================================================================
+"""
+
+from logging.config import dictConfig
+import logging
 import sqlite3
 
-from api.model.chatbot import Chatbot
-
-CHATBOT_API_DB_PATH = "./databases/chatbot_instances.db"
+from api.controllers.chatbot_controller import ChatbotController
+from api.controllers.user_controller import UserController
+from api.models.chatbot import Chatbot
+from api.settings import CHATBOT_API_DB_PATH
+from flask import Flask
+from flask import current_app as app
 
 def initialise_app():
-    initialise_sqlite_database()
-    available_chatbots = load_chatbots()
-    if not available_chatbots:
-        print("No chatbots available. Please check the database.")
-    else:
-        print(f"Loaded {len(available_chatbots)} chatbots from the database.")
-    return available_chatbots
+    dictConfig({
+        'version': 1,
+        'formatters': {'default': {
+            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+        }},
+        'handlers': {'wsgi': {
+            'class': 'logging.StreamHandler',
+            'stream': 'ext://flask.logging.wsgi_errors_stream',
+            'formatter': 'default'
+        }},
+        'root': {
+            'level': 'INFO',
+            'handlers': ['wsgi']
+        }
+    })
+
+    app = Flask(__name__)
+    
+    # Initialize database within application context
+    with app.app_context():
+        initialise_sqlite_database()
+    
+    return app
 
 def initialise_sqlite_database():
-    con = sqlite3.connect(CHATBOT_API_DB_PATH)
-    cur = con.cursor()
-    cur.execute('''
-            CREATE TABLE IF NOT EXISTS chatbot_instances (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            llm_model TEXT NOT NULL,
-            temperature REAL NOT NULL,
-            num_predict INTEGER NOT NULL,
-            vector_db_path TEXT NOT NULL,
-            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-            )
-    ''')
+    """Initialise the SQLite database and create necessary tables."""
+    ChatbotController.create_chatbot_instances_table()
+    UserController.create_users_table()
+    UserController.create_user_history_table()
 
-    res = cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='chatbot_instances'")
-    if res.fetchone() is None:
-        print("Table 'chatbot_instances' was not created successfully.")
-        con.close()
-        return
-    else:
-        print("Table 'chatbot_instances' is ready for use.")
+    chatbot_instances = ChatbotController.get_all_chatbot_instances()
+    if len(chatbot_instances) == 0:
+        app.logger.warning("No chatbot instances found, inserting default instances.")
+        ChatbotController.create_chatbot_instance("llama3.1", 0.6, 4096, "./databases/rag_milvus.db")
+        ChatbotController.create_chatbot_instance("gemma3", 0.6, 4096, "./databases/rag_milvus.db")
+        ChatbotController.create_chatbot_instance("deepseek-r1", 0.6, 4096, "./databases/rag_milvus.db")
 
-    cur.execute('''
-            CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL,
-            email TEXT NULL
-            )
-    ''')
-
-    res = cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='users'")
-    if res.fetchone() is None:
-        print("Table 'users' was not created successfully.")
-        con.close()
-        return
-    else:
-        print("Table 'users' is ready for use.")
-
-    cur.execute('''
-        CREATE TABLE IF NOT EXISTS user_history (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_id INTEGER NOT NULL,
-            chatbot_id INTEGER NOT NULL,
-            content TEXT NOT NULL,
-            role TEXT NOT NULL,
-            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (user_id) REFERENCES users(user_id),
-            FOREIGN KEY (chatbot_id) REFERENCES chatbot_instances(id)
-        )
-    ''')
-    res = cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='user_history'")
-    if res.fetchone() is None:
-        print("Table 'user_history' was not created successfully.")
-        con.close()
-        return
-    else:
-        print("Table 'user_history' is ready for use.")
-
-
-    res = cur.execute("SELECT COUNT(*) FROM chatbot_instances")
-    if res.fetchone()[0] == 0:
-        print("No chatbot instances found, inserting default instances.")
-        # Insert a default chatbot instance
-        cur.execute('''
-            INSERT INTO chatbot_instances (llm_model, temperature, num_predict, vector_db_path)
-            VALUES (?, ?, ?, ?)
-        ''', ("llama3.1", 0.8, 4096, "./databases/rag_milvus.db"))
-        cur.execute('''
-            INSERT INTO chatbot_instances (llm_model, temperature, num_predict, vector_db_path)
-            VALUES (?, ?, ?, ?)
-        ''', ("gemma3", 0.8, 4096, "./databases/rag_milvus.db"))
-        cur.execute('''
-            INSERT INTO users (username)
-            VALUES (?)
-        ''', ("guest_user",))
-        cur.execute('''
-            INSERT INTO users (username)
-            VALUES (?)
-        ''', ("tomas",))
-
-    con.commit()
-    con.close()
+    users = UserController.get_all_users()
+    if len(users) == 0:
+        UserController.create_user("guest_user", "guest_user@example.com")
 
 def load_chatbots():
-    """Load available chatbots from the database"""
-    con = sqlite3.connect(CHATBOT_API_DB_PATH)
-    cur = con.cursor()
-    res = cur.execute("SELECT * FROM chatbot_instances")
+    """Load available chatbots from the database and start them"""
+    chatbot_instances = ChatbotController.get_all_chatbot_instances()
+
     available_chatbots = {}
-    
-    for row in res.fetchall():
+
+    for row in chatbot_instances:
         chatbot_id = f"{row[0]}"
         available_chatbots[chatbot_id] = Chatbot({
             "chatbot_id": chatbot_id,
@@ -113,5 +79,13 @@ def load_chatbots():
             "vector_db_path": row[4]
         }, chatbot_api_db_path=CHATBOT_API_DB_PATH)
 
-    con.close()
+    return available_chatbots
+
+def get_available_chatbots():
+    """Get a list of available chatbots."""
+    available_chatbots = load_chatbots()
+    if not available_chatbots:
+        app.logger.warning("No chatbots available. Please check the database.")
+    else:
+        app.logger.info(f"Loaded {len(available_chatbots)} chatbots from the database.")
     return available_chatbots
