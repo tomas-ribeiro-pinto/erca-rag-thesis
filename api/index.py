@@ -14,6 +14,8 @@ Description:
 
 import asyncio
 import sqlite3
+from flask import Response
+import json
 
 from api.controllers.user_controller import UserController
 from flask import jsonify, request, render_template
@@ -45,9 +47,9 @@ def chat(chatbot_id):
     return render_template('my-form.html', chatbot_id=chatbot_id, user_email=user_email)
 
 @app.route('/chatbot/<chatbot_id>/prompt', methods=['POST'])
-def prompt_to_chatbot(chatbot_id):
+def stream_prompt_to_chatbot(chatbot_id):
     """
-        Prompt a chatbot with a user message and return the response.
+        Stream chatbot response as it's generated using Server-Sent Events.
     """
     chatbot = available_chatbots.get(chatbot_id)
     if not chatbot:
@@ -63,10 +65,47 @@ def prompt_to_chatbot(chatbot_id):
         if not user_prompt:
             return jsonify({'error': 'No prompt provided'}), 400
 
-        # Send the prompt to the chatbot
-        response = asyncio.run(chatbot.get_response(user_id, user_prompt))
-        
-        return jsonify({'response': response})
+        def generate():
+            try:
+                # Create event loop for async operations
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                
+                try:
+                    # Get the async generator from the chatbot
+                    async def run_streaming():
+                        stream_gen = await chatbot.get_response_as_stream(user_id, user_prompt)
+                        async for chunk in stream_gen:
+                            yield f"data: {json.dumps({'chunk': chunk})}\n\n"
+                        yield f"data: {json.dumps({'done': True})}\n\n"
+                    
+                    # Convert async generator to sync generator
+                    async_gen = run_streaming()
+                    
+                    # Iterate through the async generator synchronously
+                    while True:
+                        try:
+                            chunk = loop.run_until_complete(async_gen.__anext__())
+                            yield chunk
+                        except StopAsyncIteration:
+                            break
+                            
+                finally:
+                    loop.close()
+                    
+            except Exception as e:
+                yield f"data: {json.dumps({'error': str(e)})}\n\n"
+
+        return Response(
+            generate(),
+            mimetype='text/event-stream',
+            headers={
+                'Cache-Control': 'no-cache',
+                'Connection': 'keep-alive',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Cache-Control'
+            }
+        )
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
