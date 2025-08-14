@@ -78,9 +78,13 @@
             color: #333;
         }
         .streaming-message {
-            background: #f8f9fa;
+            background: #e9ecef;
             color: #333;
-            border-left: 3px solid #007bff;
+            /* background: #d4d4d4;
+            color: #333;
+            border-top: 3px solid #2e2e2e;
+            border-bottom: 3px solid #2e2e2e; */
+
         }
         .error {
             background: #f8d7da;
@@ -101,8 +105,8 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background-color: #007bff;
-            animation: typing 1.4s infinite ease-in-out;
+            background-color: #2e2e2e;
+            animation: typing 2s infinite ease-in-out;
         }
         .typing-indicator:nth-child(1) { animation-delay: -0.32s; }
         .typing-indicator:nth-child(2) { animation-delay: -0.16s; }
@@ -178,7 +182,6 @@
             const streamingDiv = document.getElementById('streaming-message');
             if (streamingDiv) {
                 streamingDiv.textContent = content;
-                chatContainer.scrollTop = chatContainer.scrollHeight;
             }
         }
 
@@ -272,75 +275,6 @@
             });
         }
 
-        // // Alternative: Stream using fetch with POST and JSON streaming
-        // async function streamResponseJSON(userMessage) {
-        //     return new Promise(async (resolve, reject) => {
-        //         const streamingDiv = addStreamingMessage();
-        //         let accumulatedResponse = '';
-
-        //         try {
-        //             const response = await fetch(`/chatbot/${chatbot_id}/prompt/stream-json`, {
-        //                 method: 'POST',
-        //                 headers: {
-        //                     'Content-Type': 'application/json',
-        //                 },
-        //                 body: JSON.stringify({
-        //                     user_email: user_email,
-        //                     prompt: userMessage
-        //                 })
-        //             });
-
-        //             if (!response.ok) {
-        //                 throw new Error(`HTTP error! status: ${response.status}`);
-        //             }
-
-        //             const reader = response.body.getReader();
-        //             const decoder = new TextDecoder();
-
-        //             while (true) {
-        //                 const { done, value } = await reader.read();
-                        
-        //                 if (done) {
-        //                     finalizeStreamingMessage();
-        //                     resolve(accumulatedResponse);
-        //                     break;
-        //                 }
-
-        //                 const chunk = decoder.decode(value, { stream: true });
-        //                 const lines = chunk.split('\n');
-
-        //                 for (const line of lines) {
-        //                     if (line.trim()) {
-        //                         try {
-        //                             const data = JSON.parse(line);
-                                    
-        //                             if (data.chunk) {
-        //                                 accumulatedResponse += data.chunk;
-        //                                 updateStreamingMessage(accumulatedResponse);
-        //                             } else if (data.done) {
-        //                                 finalizeStreamingMessage();
-        //                                 resolve(accumulatedResponse);
-        //                                 return;
-        //                             } else if (data.error) {
-        //                                 streamingDiv.remove();
-        //                                 showError(data.error);
-        //                                 reject(new Error(data.error));
-        //                                 return;
-        //                             }
-        //                         } catch (parseError) {
-        //                             console.warn('Failed to parse JSON line:', line);
-        //                         }
-        //                     }
-        //                 }
-        //             }
-        //         } catch (error) {
-        //             streamingDiv.remove();
-        //             showError(error.message);
-        //             reject(error);
-        //         }
-        //     });
-        // }
-
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
             const userMessage = input.value.trim();
@@ -355,9 +289,8 @@
                 input.value = "";
                 
                 try {
-                    // Use SSE streaming (preferred) or JSON streaming
+                    // Use SSE streaming
                     await streamResponse(userMessage);
-                    // Alternative: await streamResponseJSON(userMessage);
                 } catch (error) {
                     console.error('Streaming failed:', error);
                 } finally {

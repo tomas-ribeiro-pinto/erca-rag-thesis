@@ -11,6 +11,7 @@ Description:
 
 # This is the path to the SQLite database file for chatbot instances
 CHATBOT_API_DB_PATH = "./databases/chatbot_instances.db"
+MAX_MESSAGES = 10  # Maximum number of messages to keep in the conversation history
 CHATBOT_DEFAULT_GREETING_MESSAGE = (
     "Hello {user_name}! I’m your assistant for image processing. "
     "I can help you understand concepts like filters, transformations, segmentation, and more – all based on the information I’ve been given. "
@@ -36,4 +37,10 @@ CHATBOT_SYSTEM_TEMPLATE = (
     "\n Mr Irfan Yaqub (Email: hcxiy1@nottingham.edu.my)"
     "Remember to keep responses under 4096 tokens and suitable for university students."
     "Current context: {context}"
+)
+CHATBOT_SUMMARY_SYSTEM_TEMPLATE = (
+    "Create a precise technical summary of this image processing conversation. "
+    "Include: key questions, solutions, and decisions. "
+    "Omit greetings and social remarks. But do include any user preferences or important details such as name."
+    "Maximum 150 words. Third-person perspective."
 )

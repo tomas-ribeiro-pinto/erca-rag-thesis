@@ -74,7 +74,7 @@ def stream_prompt_to_chatbot(chatbot_id):
                 try:
                     # Get the async generator from the chatbot
                     async def run_streaming():
-                        stream_gen = await chatbot.get_response_as_stream(user_id, user_prompt)
+                        stream_gen = await chatbot.get_stream_response(user_id, user_prompt)
                         async for chunk in stream_gen:
                             yield f"data: {json.dumps({'chunk': chunk})}\n\n"
                         yield f"data: {json.dumps({'done': True})}\n\n"
@@ -82,7 +82,12 @@ def stream_prompt_to_chatbot(chatbot_id):
                     # Convert async generator to sync generator
                     async_gen = run_streaming()
                     
-                    # Iterate through the async generator synchronously
+                    # Iterate through the async generator synchronously:
+                    # - Gets the next chunk from the async generator
+                    # - Uses run_until_complete to wait for each chunk synchronously
+                    # - Yields each chunk to Flask's response stream
+                    # - Breaks when the async generator is exhausted
+
                     while True:
                         try:
                             chunk = loop.run_until_complete(async_gen.__anext__())
