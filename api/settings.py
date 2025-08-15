@@ -17,7 +17,7 @@ CHATBOT_DEFAULT_GREETING_MESSAGE = (
     "I can help you understand concepts like filters, transformations, segmentation, and more – all based on the information I’ve been given. "
     "If you have a specific question or need some clarification, just let me know. Let’s get started! "
 )
-CHATBOT_SYSTEM_TEMPLATE = (
+CHATBOT_SYSTEM_PROMPT = (
     "You are an expert assistant helping university students with questions about image processing. "
     "Use the provided context from lecture notes, slides, and other materials to answer questions clearly and concisely.\n\n"
     "Guidelines:\n"
@@ -38,7 +38,7 @@ CHATBOT_SYSTEM_TEMPLATE = (
     "Remember to keep responses under 4096 tokens and suitable for university students."
     "Current context: {context}"
 )
-CHATBOT_SUMMARY_SYSTEM_TEMPLATE = (
+CHATBOT_SUMMARY_SYSTEM_PROMPT = (
     "Create a precise technical summary of this image processing conversation. "
     "Include: key questions, solutions, and decisions. "
     "Omit greetings and social remarks. But do include any user preferences or important details such as name."

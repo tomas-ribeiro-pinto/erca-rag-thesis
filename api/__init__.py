@@ -17,7 +17,7 @@ import sqlite3
 from api.controllers.chatbot_controller import ChatbotController
 from api.controllers.user_controller import UserController
 from api.models.chatbot import Chatbot
-from api.settings import CHATBOT_API_DB_PATH
+from api.settings import CHATBOT_API_DB_PATH, CHATBOT_SYSTEM_PROMPT
 from flask import Flask
 from flask import current_app as app
 
@@ -55,9 +55,15 @@ def initialise_sqlite_database():
     chatbot_instances = ChatbotController.get_all_chatbot_instances()
     if len(chatbot_instances) == 0:
         app.logger.warning("No chatbot instances found, inserting default instances.")
-        ChatbotController.create_chatbot_instance("llama3.1", 0.6, 4096, "./databases/rag_milvus.db")
-        ChatbotController.create_chatbot_instance("gemma3", 0.6, 4096, "./databases/rag_milvus.db")
-        ChatbotController.create_chatbot_instance("deepseek-r1", 0.6, 4096, "./databases/rag_milvus.db")
+        ChatbotController.create_chatbot_instance(name="Image Processing chatbot", llm_model="llama3.1", 
+                                                  temperature=0.6, num_predict=4096, system_prompt=CHATBOT_SYSTEM_PROMPT, 
+                                                  documents_path="./documents", vector_db_path="./databases/rag_milvus.db")
+        ChatbotController.create_chatbot_instance(name="chatbot2", llm_model="gemma3", 
+                                                  temperature=0.6, num_predict=4096, system_prompt=CHATBOT_SYSTEM_PROMPT, 
+                                                  documents_path="./documents", vector_db_path="./databases/rag_milvus.db")
+        ChatbotController.create_chatbot_instance(name="chatbot3", llm_model="deepseek-r1", 
+                                                  temperature=0.6, num_predict=4096, system_prompt=CHATBOT_SYSTEM_PROMPT, 
+                                                  documents_path="./documents", vector_db_path="./databases/rag_milvus.db")
 
     users = UserController.get_all_users()
     if len(users) == 0:
@@ -72,11 +78,12 @@ def load_chatbots():
     for row in chatbot_instances:
         chatbot_id = f"{row[0]}"
         available_chatbots[chatbot_id] = Chatbot({
+            "name": row[1],
             "chatbot_id": chatbot_id,
-            "llm_model": row[1],
-            "temperature": row[2],
-            "num_predict": row[3],
-            "vector_db_path": row[4]
+            "llm_model": row[3],
+            "temperature": row[4],
+            "num_predict": row[5],
+            "vector_db_path": row[7]
         }, chatbot_api_db_path=CHATBOT_API_DB_PATH)
 
     return available_chatbots

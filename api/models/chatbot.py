@@ -15,7 +15,7 @@ Description:
 
 import asyncio
 from api.controllers.user_controller import UserController
-from api.settings import CHATBOT_SYSTEM_TEMPLATE, MAX_MESSAGES, CHATBOT_SUMMARY_SYSTEM_TEMPLATE
+from api.settings import CHATBOT_SYSTEM_PROMPT, MAX_MESSAGES, CHATBOT_SUMMARY_SYSTEM_PROMPT
 from chatbot.rag_generator import RagGenerator
 from chatbot.rag_retriever import RagRetriever
 from langchain_ollama import ChatOllama
@@ -36,16 +36,15 @@ class Chatbot:
             num_predict = instance["num_predict"],
         )
 
-        # Use a separate database file for the API to avoid conflicts
         project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        api_db_path = os.path.join(project_root, instance["vector_db_path"])
-        self.retriever = RagRetriever(db_path=api_db_path)
+        vector_db_path = os.path.join(project_root, instance["vector_db_path"])
+        self.retriever = RagRetriever(vector_db_path=vector_db_path)
         self.generator = RagGenerator(self.llm)
         self.user_history_db_path = os.path.join(project_root, chatbot_api_db_path)
 
-        system_template = CHATBOT_SYSTEM_TEMPLATE
+        system_prompt = instance["system_prompt"] if "system_prompt" in instance else CHATBOT_SYSTEM_PROMPT
         self.prompt_template = ChatPromptTemplate.from_messages(
-            [("system", system_template), ("user", "{user_prompt}")]
+            [("system", system_prompt), ("user", "{user_prompt}")]
         )
         
         # Initialize the workflow with a state graph (without compiling)
@@ -105,7 +104,7 @@ class Chatbot:
     
             # Generate summary 
             summary_message = self.llm.invoke(
-                [HumanMessage(content=f"Conversation:\n{clean_history}\n\nInstructions:\n{CHATBOT_SUMMARY_SYSTEM_TEMPLATE}")]
+                [HumanMessage(content=f"Conversation:\n{clean_history}\n\nInstructions:\n{CHATBOT_SUMMARY_SYSTEM_PROMPT}")]
             )
 
             # Try to safely create delete messages, but have a fallback approach

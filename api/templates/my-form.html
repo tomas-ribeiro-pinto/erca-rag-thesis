@@ -135,7 +135,7 @@
         // Load chat history on page load
         async function loadChatHistory() {
             try {
-                const response = await fetch(`/chatbot/${chatbot_id}/history`, {
+                const response = await fetch(`/api/chatbot/${chatbot_id}/history`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -211,7 +211,7 @@
                 let accumulatedResponse = '';
 
                 try {
-                    const response = await fetch(`/chatbot/${chatbot_id}/prompt`, {
+                    const response = await fetch(`/api/chatbot/${chatbot_id}/prompt`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
