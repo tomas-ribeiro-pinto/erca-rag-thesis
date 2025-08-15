@@ -49,7 +49,7 @@ def chat(chatbot_id):
 @app.route('/api/chatbot/list', methods=['GET'])
 def get_available_chatbots():
     chatbot_instances = [
-        {"name": chatbot.name, "id": chatbot.id}
+        {"name": chatbot.name, "id": chatbot.chatbot_id}
         for chatbot in available_chatbots.values()
     ]
     return jsonify({'available_chatbots': chatbot_instances})

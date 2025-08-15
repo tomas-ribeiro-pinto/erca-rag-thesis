@@ -30,6 +30,7 @@ import os
 class Chatbot:
     def __init__(self, instance, chatbot_api_db_path="./databases/chatbot_instances.db"):
         self.chatbot_id = instance["chatbot_id"]
+        self.name = instance["name"]
         self.llm = ChatOllama(
             model = instance["llm_model"],
             temperature = instance["temperature"],

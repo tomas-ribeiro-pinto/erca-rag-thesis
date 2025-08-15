@@ -10,3 +10,7 @@ Pipfile
 Miniconda3-latest-MacOSX-x86_64.sh
 /api/models/__pycache__
 api/models/__pycache__/chatbot.cpython-312.pyc
+api/controllers/__pycache__/database_controller.cpython-312.pyc
+api/controllers/__pycache__/user_controller.cpython-312.pyc
+api/models/__pycache__/chatbot.cpython-312.pyc
+api/controllers/__pycache__/chatbot_controller.cpython-312.pyc
