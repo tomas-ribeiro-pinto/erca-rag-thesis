@@ -9,10 +9,18 @@ class DatabaseController():
         con.row_factory = sqlite3.Row  # This makes rows dict-like
         cur = con.cursor()
         res = cur.execute(query, params)
-        data = res.fetchall()
-        con.commit()
-        con.close()
-        return data
+        
+        # For INSERT queries, return the lastrowid
+        if query.strip().upper().startswith('INSERT'):
+            lastrowid = cur.lastrowid
+            con.commit()
+            con.close()
+            return lastrowid
+        else:
+            data = res.fetchall()
+            con.commit()
+            con.close()
+            return data
 
     def create_table_query(query, table_name, params=()):
         if not table_name:

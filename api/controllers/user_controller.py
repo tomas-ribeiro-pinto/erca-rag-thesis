@@ -67,7 +67,7 @@ class UserController():
         return DatabaseController.execute_query(query)
 
     def get_guest_user(chatbot_id):
-        guest_email = "guest@example.com"
+        guest_email = "guest_user@example.com"
         user = UserController.get_user_by_email(guest_email)
         if user is None:
             UserController.create_user(username="guest_user", user_email=guest_email)

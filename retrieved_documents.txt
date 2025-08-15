@@ -68596,3 +68596,3963 @@ Page Number: 20
 Content:
 Now, you know the answers!
 ========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 1
+Content:
+University of Nottingham ~ UK | CHINA | MALAYSIA
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 1
+Content:
+COMP-2032 Introduction to Image Processing
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 1
+Content:
+Lecture 4 Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 1
+Content:
+om
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+ir
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+Learning Outcomes
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+IDENTIFY  1. What is Thresholding  2. Adaptive Thresholding 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+2
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 3
+Content:
+University of m @e© Nottingham “i UK | CHINA | MALAYSIA
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 3
+Content:
+What is
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 3
+Content:
+Thresholding?
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+ir
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+Many image processing operations make a decision:
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+ee ee ee eee : .- Pixels a binary image; = '_ Binary eee eee, I | s=T(r) =| rH~ Dark
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+Is this the colour/object/edge I am interested in?
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+enhancement, etc. 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+- Pixels can have only two values: 0 or 1
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+eee ‘The Pee
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+The result is a binary image
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+- Binary images also need noise removal,
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+enhancement, etc.
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+s=T(r) =| rH~ ! Dark Light
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+l
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+4
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+Binarisation: Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+• A dark object on a light background in a grey-level image • Choose a threshold value, T • Consider each pixel in turn - If the brightness at a pixel is less than T, that pixel is object - Otherwise, it is part of the background Basic idea extends to colour; define sets of colour values that correspond to objects
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+Threshold, T = 96
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+5
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+Too Simple?
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+The value of the threshold is very important
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+a
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+If it is too high, background pixels will be
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+classified as foreground
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+-
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+"-
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+If it is too low, object pixels will be considered
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+background
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+Assumes there are exactly two regions, with
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+no
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+no overlap in their brightness – is that true?
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+I
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+T = 64
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+6
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+ir
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+Adaptive Thresholds
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+If the user chooses t for each of a set of images, there is no guarantee the results will be consistent - Automatic methods choose a threshold based on image properties: histogram are commonly used
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+-
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+--
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+-
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+-
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+Pixcl Count A} ' ' ' Pixcl Intensity Pixcl Intensity Pixel Intensity
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+7
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 8
+Content:
+University of m @e© Nottingham “i UK | CHINA | MALAYSIA
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 8
+Content:
+Adaptive Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+Otsu Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+• Assumes histograms are bimodal; two regions can be separated by one threshold
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+.* '
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+• Think of the histrogram as made of two normal (Gaussian) distributions, described by their means and deviations
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+🤔
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+lf be pe ee ne a I |- 1- 1-
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+If a threshold is wrong, it will include histogram bins from peak A in peak B
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+eee nen
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+a
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+a
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+a nn
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+ne
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+|
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+No. of points ak ons J \ fo VA \ VA \ Brightness Optimal threshold value
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+- Peak A’s deviation will be too small
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+- Peak B’s deviation will be too big
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+| !
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+- Peak A’s size (area) will be too small
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+- Peak B’s size will be too big
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+:
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+|
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+9
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+ir
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+Otsu Thresholding 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+• Find the threshold which minimises a weighted sum of the variations of the two regions that threshold produce
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+• Weights are the areas of the histogram assigned to each region
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+2(t) = q1(t)σ1
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+σw
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+2(t) + q2(t)σ2
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+2(t)
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+t
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+I
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+∑ P(i) q2(t) = ∑
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+q1(t) =
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+P(i)
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+i=1
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+i=t+1
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+I , ,
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+This is small when the two regions are both physically small and have low
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+deviations
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+|
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+| ! !
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+10
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+Otsu Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+• Consider all possible threshold values (0 – 255)  • Compute weighted sum  • Pick t with the smallest value  Algorithm  A recursive version exists that is very efficient 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+Thresholding & Binary Images 50 100 150 200 250 300
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+11
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+f’ =
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+Unimodal Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+I
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+Many histograms are not bimodal, there is often only one peak e.g.,
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+,
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+text is mainly white, with a small amount of black
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+I \¢ .° , ,* ,
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+• Finds the peak
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+• Draws a line from there to the top of the
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+furthest bin
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+• Finds the top of the bin that is furthest
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+from this line; that bin value is the
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+_
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+threshold
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+Rosin’s unimodal method
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+Bin Value
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+|
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+12
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+Histogram of edge  
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+Unimodal Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+Can be applied to any suitable image, e.g., intensity gradients
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+Edge of magnitudes  (inverted for display)  COMP 2032  Thresholding & Binary Images 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+Edge of magnitudes (inverted for display)
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+Histogram of edge
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+magnitudes
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+13
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+Unimodal Thresholding  Rosin 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+f’ =
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+14
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+Otsu vs Rosin
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+Frequency Bin Value
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+Frequency Threshold ; Bin Value
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+15
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+ir
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+Local Adaptive Methods
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+• Imaging conditions and object properties can vary within a single image as well as across sets of images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+'e '
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+• Histograms can be too complex for any method’s assumption to be
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+true
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+CRC Press
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+Otsu
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+16
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+Local Adaptive Methods
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+• Assumptions about histograms may, however, be true for local areas
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+of the image
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+• Divide image into sub-regions, apply a threshold selection method independently to each
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+1 CRC Press
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+- The histograms of each vertical   strip of this image are bimodal  - Otsu can be applied to each strip 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+17
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+Summary
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+‘1. What is Thresholding (2. Adaptive Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+🤔
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+18
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 19
+Content:
+University of Nottingham UK | CHINA. | MALAYSIA
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 19
+Content:
+Questions
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 19
+Content:
+Questions
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 20
+Content:
+University of Nottingham UK | CHINA. | MALAYSIA
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 20
+Content:
+NEXT:
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 20
+Content:
+NEXT: Morphological
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 20
+Content:
+Morphological
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 20
+Content:
+Operations
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 1
+Content:
+University of Nottingham ~ UK | CHINA | MALAYSIA
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 1
+Content:
+COMP-2032 Introduction to Image Processing
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 1
+Content:
+Lecture 4 Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 1
+Content:
+om
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+ir
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+Learning Outcomes
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+IDENTIFY  1. What is Thresholding  2. Adaptive Thresholding 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+2
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 3
+Content:
+University of m @e© Nottingham “i UK | CHINA | MALAYSIA
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 3
+Content:
+What is
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 3
+Content:
+Thresholding?
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+ir
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+Many image processing operations make a decision:
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+ee ee ee eee : .- Pixels a binary image; = '_ Binary eee eee, I | s=T(r) =| rH~ Dark
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+Is this the colour/object/edge I am interested in?
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+enhancement, etc. 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+- Pixels can have only two values: 0 or 1
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+eee ‘The Pee
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+The result is a binary image
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+- Binary images also need noise removal,
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+enhancement, etc.
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+s=T(r) =| rH~ ! Dark Light
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+l
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+4
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+Binarisation: Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+• A dark object on a light background in a grey-level image • Choose a threshold value, T • Consider each pixel in turn - If the brightness at a pixel is less than T, that pixel is object - Otherwise, it is part of the background Basic idea extends to colour; define sets of colour values that correspond to objects
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+Threshold, T = 96
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+5
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+Too Simple?
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+The value of the threshold is very important
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+a
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+If it is too high, background pixels will be
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+classified as foreground
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+-
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+"-
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+If it is too low, object pixels will be considered
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+background
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+Assumes there are exactly two regions, with
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+no
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+no overlap in their brightness – is that true?
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+I
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+T = 64
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+6
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+ir
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+Adaptive Thresholds
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+If the user chooses t for each of a set of images, there is no guarantee the results will be consistent - Automatic methods choose a threshold based on image properties: histogram are commonly used
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+-
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+--
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+-
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+-
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+Pixcl Count A} ' ' ' Pixcl Intensity Pixcl Intensity Pixel Intensity
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+7
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 8
+Content:
+University of m @e© Nottingham “i UK | CHINA | MALAYSIA
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 8
+Content:
+Adaptive Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+Otsu Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+• Assumes histograms are bimodal; two regions can be separated by one threshold
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+.* '
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+• Think of the histrogram as made of two normal (Gaussian) distributions, described by their means and deviations
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+🤔
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+lf be pe ee ne a I |- 1- 1-
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+If a threshold is wrong, it will include histogram bins from peak A in peak B
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+eee nen
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+a
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+a
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+a nn
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+ne
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+|
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+No. of points ak ons J \ fo VA \ VA \ Brightness Optimal threshold value
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+- Peak A’s deviation will be too small
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+- Peak B’s deviation will be too big
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+| !
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+- Peak A’s size (area) will be too small
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+- Peak B’s size will be too big
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+:
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+|
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+9
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+ir
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+Otsu Thresholding 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+• Find the threshold which minimises a weighted sum of the variations of the two regions that threshold produce
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+• Weights are the areas of the histogram assigned to each region
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+2(t) = q1(t)σ1
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+σw
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+2(t) + q2(t)σ2
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+2(t)
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+t
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+I
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+∑ P(i) q2(t) = ∑
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+q1(t) =
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+P(i)
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+i=1
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+i=t+1
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+I , ,
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+This is small when the two regions are both physically small and have low
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+deviations
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+|
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+| ! !
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+10
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+Otsu Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+• Consider all possible threshold values (0 – 255)  • Compute weighted sum  • Pick t with the smallest value  Algorithm  A recursive version exists that is very efficient 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+Thresholding & Binary Images 50 100 150 200 250 300
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+11
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+f’ =
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+Unimodal Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+I
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+Many histograms are not bimodal, there is often only one peak e.g.,
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+,
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+text is mainly white, with a small amount of black
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+I \¢ .° , ,* ,
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+• Finds the peak
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+• Draws a line from there to the top of the
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+furthest bin
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+• Finds the top of the bin that is furthest
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+from this line; that bin value is the
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+_
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+threshold
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+Rosin’s unimodal method
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+Bin Value
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+|
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+12
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+Histogram of edge  
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+Unimodal Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+Can be applied to any suitable image, e.g., intensity gradients
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+Edge of magnitudes  (inverted for display)  COMP 2032  Thresholding & Binary Images 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+Edge of magnitudes (inverted for display)
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+Histogram of edge
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+magnitudes
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+13
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+Unimodal Thresholding  Rosin 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+f’ =
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+14
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+Otsu vs Rosin
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+Frequency Bin Value
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+Frequency Threshold ; Bin Value
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+15
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+ir
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+Local Adaptive Methods
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+• Imaging conditions and object properties can vary within a single image as well as across sets of images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+'e '
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+• Histograms can be too complex for any method’s assumption to be
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+true
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+CRC Press
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+Otsu
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+16
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+Local Adaptive Methods
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+• Assumptions about histograms may, however, be true for local areas
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+of the image
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+• Divide image into sub-regions, apply a threshold selection method independently to each
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+1 CRC Press
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+- The histograms of each vertical   strip of this image are bimodal  - Otsu can be applied to each strip 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+17
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+Summary
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+‘1. What is Thresholding (2. Adaptive Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+🤔
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+18
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 19
+Content:
+University of Nottingham UK | CHINA. | MALAYSIA
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 19
+Content:
+Questions
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 19
+Content:
+Questions
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 20
+Content:
+University of Nottingham UK | CHINA. | MALAYSIA
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 20
+Content:
+NEXT:
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 20
+Content:
+NEXT: Morphological
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 20
+Content:
+Morphological
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 20
+Content:
+Operations
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 1
+Content:
+University of Nottingham ~ UK | CHINA | MALAYSIA
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 1
+Content:
+COMP-2032 Introduction to Image Processing
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 1
+Content:
+Lecture 4 Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 1
+Content:
+om
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+ir
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+Learning Outcomes
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+IDENTIFY  1. What is Thresholding  2. Adaptive Thresholding 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 2
+Content:
+2
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 3
+Content:
+University of m @e© Nottingham “i UK | CHINA | MALAYSIA
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 3
+Content:
+What is
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 3
+Content:
+Thresholding?
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+ir
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+Many image processing operations make a decision:
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+ee ee ee eee : .- Pixels a binary image; = '_ Binary eee eee, I | s=T(r) =| rH~ Dark
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+Is this the colour/object/edge I am interested in?
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+enhancement, etc. 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+- Pixels can have only two values: 0 or 1
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+eee ‘The Pee
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+The result is a binary image
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+- Binary images also need noise removal,
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+enhancement, etc.
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+s=T(r) =| rH~ ! Dark Light
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+l
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 4
+Content:
+4
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+Binarisation: Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+• A dark object on a light background in a grey-level image • Choose a threshold value, T • Consider each pixel in turn - If the brightness at a pixel is less than T, that pixel is object - Otherwise, it is part of the background Basic idea extends to colour; define sets of colour values that correspond to objects
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+Threshold, T = 96
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 5
+Content:
+5
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+Too Simple?
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+The value of the threshold is very important
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+a
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+If it is too high, background pixels will be
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+classified as foreground
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+-
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+"-
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+If it is too low, object pixels will be considered
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+background
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+Assumes there are exactly two regions, with
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+no
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+no overlap in their brightness – is that true?
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+I
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+T = 64
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 6
+Content:
+6
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+ir
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+Adaptive Thresholds
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+If the user chooses t for each of a set of images, there is no guarantee the results will be consistent - Automatic methods choose a threshold based on image properties: histogram are commonly used
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+-
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+--
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+-
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+-
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+Pixcl Count A} ' ' ' Pixcl Intensity Pixcl Intensity Pixel Intensity
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 7
+Content:
+7
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 8
+Content:
+University of m @e© Nottingham “i UK | CHINA | MALAYSIA
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 8
+Content:
+Adaptive Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+Otsu Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+• Assumes histograms are bimodal; two regions can be separated by one threshold
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+.* '
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+• Think of the histrogram as made of two normal (Gaussian) distributions, described by their means and deviations
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+🤔
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+lf be pe ee ne a I |- 1- 1-
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+If a threshold is wrong, it will include histogram bins from peak A in peak B
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+eee nen
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+a
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+a
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+a nn
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+ne
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+|
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+No. of points ak ons J \ fo VA \ VA \ Brightness Optimal threshold value
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+- Peak A’s deviation will be too small
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+- Peak B’s deviation will be too big
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+| !
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+- Peak A’s size (area) will be too small
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+- Peak B’s size will be too big
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+:
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+|
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 9
+Content:
+9
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+ir
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+Otsu Thresholding 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+• Find the threshold which minimises a weighted sum of the variations of the two regions that threshold produce
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+• Weights are the areas of the histogram assigned to each region
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+2(t) = q1(t)σ1
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+σw
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+2(t) + q2(t)σ2
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+2(t)
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+t
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+I
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+∑ P(i) q2(t) = ∑
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+q1(t) =
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+P(i)
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+i=1
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+i=t+1
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+I , ,
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+This is small when the two regions are both physically small and have low
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+deviations
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+|
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+| ! !
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 10
+Content:
+10
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+Otsu Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+• Consider all possible threshold values (0 – 255)  • Compute weighted sum  • Pick t with the smallest value  Algorithm  A recursive version exists that is very efficient 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+Thresholding & Binary Images 50 100 150 200 250 300
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 11
+Content:
+11
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+f’ =
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+Unimodal Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+I
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+Many histograms are not bimodal, there is often only one peak e.g.,
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+,
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+text is mainly white, with a small amount of black
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+I \¢ .° , ,* ,
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+• Finds the peak
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+• Draws a line from there to the top of the
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+furthest bin
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+• Finds the top of the bin that is furthest
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+from this line; that bin value is the
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+_
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+threshold
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+Rosin’s unimodal method
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+Bin Value
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+|
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 12
+Content:
+12
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+Histogram of edge  
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+Unimodal Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+Can be applied to any suitable image, e.g., intensity gradients
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+Edge of magnitudes  (inverted for display)  COMP 2032  Thresholding & Binary Images 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+Edge of magnitudes (inverted for display)
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+Histogram of edge
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+magnitudes
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 13
+Content:
+13
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+Unimodal Thresholding  Rosin 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+f’ =
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 14
+Content:
+14
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+Otsu vs Rosin
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+Frequency Bin Value
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+Frequency Threshold ; Bin Value
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 15
+Content:
+15
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+ir
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+Local Adaptive Methods
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+• Imaging conditions and object properties can vary within a single image as well as across sets of images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+'e '
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+• Histograms can be too complex for any method’s assumption to be
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+true
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+CRC Press
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+Otsu
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 16
+Content:
+16
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+Local Adaptive Methods
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+• Assumptions about histograms may, however, be true for local areas
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+of the image
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+• Divide image into sub-regions, apply a threshold selection method independently to each
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+1 CRC Press
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+- The histograms of each vertical   strip of this image are bimodal  - Otsu can be applied to each strip 
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+ACK: Prof. Tony Pridmore, UNUK
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 17
+Content:
+17
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+Summary
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+‘1. What is Thresholding (2. Adaptive Thresholding
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+COMP 2032
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+Thresholding & Binary Images
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+🤔
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 18
+Content:
+18
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 19
+Content:
+University of Nottingham UK | CHINA. | MALAYSIA
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 19
+Content:
+Questions
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 19
+Content:
+Questions
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 20
+Content:
+University of Nottingham UK | CHINA. | MALAYSIA
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 20
+Content:
+NEXT:
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 20
+Content:
+NEXT: Morphological
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 20
+Content:
+Morphological
+========================================
+Source: ./documents/Lec-4-Thresholding and Binary Images.pdf
+File Type: pdf
+Page Number: 20
+Content:
+Operations
+========================================

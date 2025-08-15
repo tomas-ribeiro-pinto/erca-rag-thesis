@@ -1,18 +1,14 @@
-from concurrent.futures import ThreadPoolExecutor
 from glob import glob
 import logging
 import os
 from uuid import uuid4
-from langchain_community.document_loaders import PyPDFLoader
 from langchain_milvus import Milvus
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_core.documents import Document
-from langchain_unstructured import UnstructuredLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from chatbot.retrievers import Retrievers
+from chatbot.document_parsers import DocumentParsers
 
 class RagRetriever:
-    def __init__(self, db_path=None):
+    def __init__(self, vector_db_path=None, documents_path=None):
         # Suppress verbose logging
         logging.getLogger("unstructured").setLevel(logging.WARNING)
         os.environ["GRPC_VERBOSITY"] = "ERROR"
@@ -25,16 +21,14 @@ class RagRetriever:
         self.chunk_size = 1024
         self.chunk_overlap = 15
 
-        # Use absolute path to avoid working directory issues
-        if db_path is None:
-            # Default to project root directory
+        if vector_db_path is None:
             project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            db_path = os.path.join(project_root, "rag_milvus.db")
-        
-        URI = db_path
+            vector_db_path = os.path.join(project_root, "rag_milvus.db")
+
+        URI = vector_db_path
         parse_documents = False
 
-        if not os.path.exists(db_path):
+        if not os.path.exists(vector_db_path):
             parse_documents = True
 
         self.vector_store = Milvus(
@@ -44,13 +38,13 @@ class RagRetriever:
         )
 
         if parse_documents:
-            documents_path = "./documents/"
+            if documents_path is None:
+                documents_path = "./documents/"
             self.save_documents(documents_path)
 
     def process_documents(self, documents_path):
         pdf_files = glob(f"{documents_path}/*.pdf")
-        #documents = Retrievers.pypdf_retriever(pdf_files)
-        documents = Retrievers.unstructured_retriever(pdf_files)
+        documents = DocumentParsers.unstructured_parser(pdf_files)
         return documents
         
     def chunk_documents(self, documents):
