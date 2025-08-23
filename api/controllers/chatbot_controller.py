@@ -10,7 +10,9 @@ class ChatbotController():
             CREATE TABLE IF NOT EXISTS chatbot_instances (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
-            system_persona TEXT NOT NULL,
+            module_subject TEXT NOT NULL,
+            module_name TEXT NOT NULL,
+            system_guidelines TEXT NOT NULL,
             llm_model TEXT NOT NULL,
             temperature REAL NOT NULL,
             num_predict INTEGER NOT NULL,
@@ -23,13 +25,13 @@ class ChatbotController():
     def get_all_chatbot_instances():
         return DatabaseController.execute_query("SELECT * FROM chatbot_instances")
 
-    def create_chatbot_instance(name, llm_model, temperature, num_predict, system_persona, documents_path, vector_db_path=None):
+    def create_chatbot_instance(name, module_subject, module_name, llm_model, temperature, num_predict, system_guidelines, documents_path, vector_db_path=None):
         if vector_db_path is None:
             query = """
-                INSERT INTO chatbot_instances (name, llm_model, temperature, system_persona, num_predict, documents_path)
-                VALUES (?, ?, ?, ?, ?, ?)
+                INSERT INTO chatbot_instances (name, module_subject, module_name, llm_model, temperature, system_guidelines, num_predict, documents_path)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """
-            params = (name, llm_model, temperature, system_persona, num_predict, documents_path)
+            params = (name, module_subject, module_name, llm_model, temperature, system_guidelines, num_predict, documents_path)
             id = DatabaseController.execute_query(query, params)
             # Create vector database with proper .db extension
             vector_db_path = f"./databases/rag_milvus_{id}.db"
@@ -43,10 +45,10 @@ class ChatbotController():
             return id, vector_db_path
         else:
             query = """
-                INSERT INTO chatbot_instances (name, llm_model, temperature, system_persona, num_predict, documents_path, vector_db_path)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO chatbot_instances (name, module_subject, module_name, llm_model, temperature, system_guidelines, num_predict, documents_path, vector_db_path)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """
-            params = (name, llm_model, temperature, system_persona, num_predict, documents_path, vector_db_path)
+            params = (name, module_subject, module_name, llm_model, temperature, system_guidelines, num_predict, documents_path, vector_db_path)
             id = DatabaseController.execute_query(query, params)
         return id, None
 

@@ -14,7 +14,7 @@ Description:
 """
 
 from api.controllers.user_controller import UserController
-from api.settings import CHATBOT_SYSTEM_PROMPT, MAX_MESSAGES, CHATBOT_SUMMARY_SYSTEM_PROMPT, CHATBOT_PERSONA
+from api.settings import CHATBOT_GUIDELINES, CHATBOT_SYSTEM_PROMPT, MAX_MESSAGES, CHATBOT_SUMMARY_SYSTEM_PROMPT
 from chatbot.rag_generator import RagGenerator
 from chatbot.rag_retriever import RagRetriever
 from langchain_core.prompts import ChatPromptTemplate
@@ -38,7 +38,9 @@ class Chatbot:
         self.user_history_db_path = os.path.join(project_root, chatbot_api_db_path)
 
         system_prompt = CHATBOT_SYSTEM_PROMPT.format(
-            persona = instance["system_persona"] if "system_persona" in instance else CHATBOT_PERSONA,
+            guidelines = instance["system_guidelines"] if "system_guidelines" in instance else CHATBOT_GUIDELINES,
+            module_subject = instance["module_subject"] if "module_subject" in instance else "Unknown",
+            module_name = instance["module_name"] if "module_name" in instance else "Unknown",
             max_tokens = instance["num_predict"],
             context = "{context}" # Placeholder for context insertion
         )
@@ -186,7 +188,7 @@ class Chatbot:
                 try:
                     # Use the LLM's streaming
                     async for chunk in self.generator.stream(messages_for_llm):
-                        if chunk:  # chunk is already the content string from RagGenerator
+                        if chunk:
                             full_response += chunk
                             yield chunk
 
