@@ -26,21 +26,26 @@ class RagGenerator:
                     full_response += chunk.content
                     yield chunk.content
 
-            tool_output = self.check_tool_call(full_response)
-            full_response += tool_output
-            yield tool_output
+            tool_output = self.check_tool_call(f"PROMPT: {prompt} | YOUR RESPONSE:{full_response}")
+            if tool_output:  # Only add and yield if there's actual tool output
+                full_response += "\n" + tool_output
+                yield tool_output
         return stream_generator()
 
     def check_tool_call(self, llm_response):
         """Check the LLM response for potential tool calls and handle them appropriately."""
-        system_prompt = CHATBOT_TOOL_SYSTEM_PROMPT.format(tools=self.render_tools_text())
-        tool_name = self.generator.invoke(
-            [HumanMessage(content=f"LLM OUTPUT:\n{llm_response}\n\nInstructions:\n{CHATBOT_TOOL_SYSTEM_PROMPT}")]
+        system_prompt = CHATBOT_TOOL_SYSTEM_PROMPT.format(tools=self.render_tools_text(), last_message=llm_response)
+        tool_number = self.llm.invoke(
+            [HumanMessage(content=system_prompt)]
         ).content
 
-        if tool_name and tool_name != "None" and tool_name in self.tools:
-            return self.tools[tool_name].invoke()
+        print(f"Tool number identified: {tool_number}")
+
+        if tool_number and tool_number != "None" and 0 < int(tool_number) <= len(self.tools):
+            return self.tools[int(tool_number) - 1].invoke(self.llm, llm_response)
+
+        return ""
 
     
     def render_tools_text(self):
-        return "\n".join([f"- Tool name: {tool.name} | Tool description: {tool.description}" for tool in self.tools])
+        return "\n".join([f"- Tool number: {i+1} | Tool description: {tool_obj.description}" for i, tool_obj in enumerate(self.tools)])

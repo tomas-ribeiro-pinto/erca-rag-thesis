@@ -185,10 +185,10 @@ class Chatbot:
                 nonlocal full_response
                 try:
                     # Use the LLM's streaming
-                    for chunk in self.generator.stream(messages_for_llm):
-                        if hasattr(chunk, 'content') and chunk.content:
-                            full_response += chunk.content
-                            yield chunk.content
+                    async for chunk in self.generator.stream(messages_for_llm):
+                        if chunk:  # chunk is already the content string from RagGenerator
+                            full_response += chunk
+                            yield chunk
 
                     # Create the AI response message
                     response_message = AIMessage(content=full_response)

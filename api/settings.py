@@ -53,7 +53,11 @@ CHATBOT_SUMMARY_SYSTEM_PROMPT = (
 )
 
 CHATBOT_TOOL_SYSTEM_PROMPT = (
-    "According to the conversation context, the following tools may be relevant to be called:\n"
+    "This is the last LLM output message:\n"
+    "{last_message}\n"
+    "According to the conversation history, the following tools may be relevant to be called:\n"
     "{tools}"
-    "Please select a tool to use from the options by returning its name or return 'None' if no tool is applicable or available."
+    "\nEND OF TOOLS LIST\n"
+    "According to the descriptions, please select a tool from the above list by returning its number only (e.g: '1') or return 'None' if no tool is applicable or available."
+    "Only include the tool number in your response. This number needs to be in the tool list above!"
 )
