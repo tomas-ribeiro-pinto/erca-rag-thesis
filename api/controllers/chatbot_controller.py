@@ -1,11 +1,7 @@
-import sqlite3
-
 from flask import app
 from api.controllers.database_controller import DatabaseController
 import os
 
-from api.models.chatbot import Chatbot
-from api.settings import CHATBOT_API_DB_PATH
 from chatbot.rag_retriever import RagRetriever
 
 class ChatbotController():
@@ -14,7 +10,7 @@ class ChatbotController():
             CREATE TABLE IF NOT EXISTS chatbot_instances (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
-            system_prompt TEXT NOT NULL,
+            system_persona TEXT NOT NULL,
             llm_model TEXT NOT NULL,
             temperature REAL NOT NULL,
             num_predict INTEGER NOT NULL,
@@ -27,13 +23,13 @@ class ChatbotController():
     def get_all_chatbot_instances():
         return DatabaseController.execute_query("SELECT * FROM chatbot_instances")
 
-    def create_chatbot_instance(name, llm_model, temperature, num_predict, system_prompt, documents_path, vector_db_path=None):
+    def create_chatbot_instance(name, llm_model, temperature, num_predict, system_persona, documents_path, vector_db_path=None):
         if vector_db_path is None:
             query = """
-                INSERT INTO chatbot_instances (name, llm_model, temperature, system_prompt, num_predict, documents_path)
+                INSERT INTO chatbot_instances (name, llm_model, temperature, system_persona, num_predict, documents_path)
                 VALUES (?, ?, ?, ?, ?, ?)
             """
-            params = (name, llm_model, temperature, system_prompt, num_predict, documents_path)
+            params = (name, llm_model, temperature, system_persona, num_predict, documents_path)
             id = DatabaseController.execute_query(query, params)
             # Create vector database with proper .db extension
             vector_db_path = f"./databases/rag_milvus_{id}.db"
@@ -47,10 +43,10 @@ class ChatbotController():
             return id, vector_db_path
         else:
             query = """
-                INSERT INTO chatbot_instances (name, llm_model, temperature, system_prompt, num_predict, documents_path, vector_db_path)
+                INSERT INTO chatbot_instances (name, llm_model, temperature, system_persona, num_predict, documents_path, vector_db_path)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
             """
-            params = (name, llm_model, temperature, system_prompt, num_predict, documents_path, vector_db_path)
+            params = (name, llm_model, temperature, system_persona, num_predict, documents_path, vector_db_path)
             id = DatabaseController.execute_query(query, params)
         return id, None
 
@@ -77,3 +73,8 @@ class ChatbotController():
         query2 = "DELETE FROM chatbot_instances WHERE id = ?"
         params2 = (chatbot_id,)
         DatabaseController.execute_query(query2, params2)
+
+        # Lastly, delete related documents
+        query3 = "DELETE FROM documents WHERE chatbot_id = ?"
+        params3 = (chatbot_id,)
+        DatabaseController.execute_query(query3, params3)

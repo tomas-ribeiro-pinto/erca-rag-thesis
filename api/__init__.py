@@ -11,13 +11,12 @@ Description:
 """
 
 from logging.config import dictConfig
-import logging
-import sqlite3
 
 from api.controllers.chatbot_controller import ChatbotController
+from api.controllers.document_controller import DocumentChunkController
 from api.controllers.user_controller import UserController
 from api.models.chatbot import Chatbot
-from api.settings import CHATBOT_API_DB_PATH, CHATBOT_SYSTEM_PROMPT
+from api.settings import CHATBOT_API_DB_PATH, CHATBOT_PERSONA
 from flask import Flask
 from flask import current_app as app
 
@@ -51,18 +50,19 @@ def initialise_sqlite_database():
     ChatbotController.create_chatbot_instances_table()
     UserController.create_users_table()
     UserController.create_user_history_table()
+    DocumentChunkController.create_document_chunks_table()
 
     chatbot_instances = ChatbotController.get_all_chatbot_instances()
     if len(chatbot_instances) == 0:
         app.logger.warning("No chatbot instances found, inserting default instances.")
         ChatbotController.create_chatbot_instance(name="Image Processing chatbot", llm_model="llama3.1", 
-                                                  temperature=0.6, num_predict=4096, system_prompt=CHATBOT_SYSTEM_PROMPT, 
+                                                  temperature=0.6, num_predict=4096, system_persona=CHATBOT_PERSONA, 
                                                   documents_path="./documents", vector_db_path="./databases/rag_milvus.db")
         ChatbotController.create_chatbot_instance(name="chatbot2", llm_model="gemma3", 
-                                                  temperature=0.6, num_predict=4096, system_prompt=CHATBOT_SYSTEM_PROMPT, 
+                                                  temperature=0.6, num_predict=4096, system_persona=CHATBOT_PERSONA, 
                                                   documents_path="./documents", vector_db_path="./databases/rag_milvus.db")
         ChatbotController.create_chatbot_instance(name="chatbot3", llm_model="deepseek-r1", 
-                                                  temperature=0.6, num_predict=4096, system_prompt=CHATBOT_SYSTEM_PROMPT, 
+                                                  temperature=0.6, num_predict=4096, system_persona=CHATBOT_PERSONA, 
                                                   documents_path="./documents", vector_db_path="./databases/rag_milvus.db")
 
     users = UserController.get_all_users()
@@ -80,10 +80,12 @@ def load_chatbots():
         available_chatbots[chatbot_id] = Chatbot({
             "name": row[1],
             "chatbot_id": chatbot_id,
+            "system_persona": row[2],
             "llm_model": row[3],
             "temperature": row[4],
             "num_predict": row[5],
-            "vector_db_path": row[7]
+            "documents_path": row[6],
+            "vector_db_path": row[7],
         }, chatbot_api_db_path=CHATBOT_API_DB_PATH)
 
     return available_chatbots

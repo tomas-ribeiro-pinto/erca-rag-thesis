@@ -14,3 +14,4 @@ api/controllers/__pycache__/database_controller.cpython-312.pyc
 api/controllers/__pycache__/user_controller.cpython-312.pyc
 api/models/__pycache__/chatbot.cpython-312.pyc
 api/controllers/__pycache__/chatbot_controller.cpython-312.pyc
+databases/.DS_Store

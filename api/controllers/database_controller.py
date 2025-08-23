@@ -1,5 +1,4 @@
 import sqlite3
-import logging
 from api.settings import CHATBOT_API_DB_PATH
 from flask import current_app as app
 

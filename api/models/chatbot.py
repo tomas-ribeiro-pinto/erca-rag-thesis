@@ -13,37 +13,36 @@ Description:
 ================================================================================
 """
 
-import asyncio
 from api.controllers.user_controller import UserController
-from api.settings import CHATBOT_SYSTEM_PROMPT, MAX_MESSAGES, CHATBOT_SUMMARY_SYSTEM_PROMPT
+from api.settings import CHATBOT_SYSTEM_PROMPT, MAX_MESSAGES, CHATBOT_SUMMARY_SYSTEM_PROMPT, CHATBOT_PERSONA
 from chatbot.rag_generator import RagGenerator
 from chatbot.rag_retriever import RagRetriever
-from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage, RemoveMessage
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import START, MessagesState, StateGraph
 
-import sqlite3
 import os
 
 class Chatbot:
     def __init__(self, instance, chatbot_api_db_path="./databases/chatbot_instances.db"):
         self.chatbot_id = instance["chatbot_id"]
         self.name = instance["name"]
-        self.llm = ChatOllama(
-            model = instance["llm_model"],
-            temperature = instance["temperature"],
-            num_predict = instance["num_predict"],
-        )
 
         project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
         vector_db_path = os.path.join(project_root, instance["vector_db_path"])
-        self.retriever = RagRetriever(vector_db_path=vector_db_path)
-        self.generator = RagGenerator(self.llm)
+        self.retriever = RagRetriever(vector_db_path=vector_db_path, chatbot_id=self.chatbot_id, documents_path=instance["documents_path"])
+        self.generator = RagGenerator(model = instance["llm_model"],
+            temperature = instance["temperature"],
+            num_predict = instance["num_predict"],)
         self.user_history_db_path = os.path.join(project_root, chatbot_api_db_path)
 
-        system_prompt = instance["system_prompt"] if "system_prompt" in instance else CHATBOT_SYSTEM_PROMPT
+        system_prompt = CHATBOT_SYSTEM_PROMPT.format(
+            persona = instance["system_persona"] if "system_persona" in instance else CHATBOT_PERSONA,
+            max_tokens = instance["num_predict"],
+            context = "{context}" # Placeholder for context insertion
+        )
+
         self.prompt_template = ChatPromptTemplate.from_messages(
             [("system", system_prompt), ("user", "{user_prompt}")]
         )
@@ -61,14 +60,22 @@ class Chatbot:
     def get_state(self, state: MessagesState):
         """Simple placeholder method that returns the state unchanged"""
         return state
+        
 
-    def get_user_app(self, user_id):
+    def get_user_app(self, user_id,):
         """Get or create a user-specific compiled workflow"""
         if user_id not in self.user_apps:
-            # Create a new memory checkpointer for this user
-            memory = MemorySaver()
-            self.user_apps[user_id] = self.workflow.compile(checkpointer=memory)
+            self.create_user_app(user_id)
+
         return self.user_apps[user_id]
+
+    def create_user_app(self, user_id):
+        """Create a user-specific workflow"""
+        config = {"configurable": {"thread_id": "default"}}
+        memory = MemorySaver()
+        user_name = UserController.get_user_by_id(user_id)['username']
+        self.user_apps[user_id] = self.workflow.compile(checkpointer=memory)
+        self.user_apps[user_id].update_state(config, {"messages": [SystemMessage(content=f"You are talking to {user_name}.")]})
 
     def prepare_streaming_context(self, state: MessagesState):
         """
@@ -85,7 +92,7 @@ class Chatbot:
         user_message = state["messages"][-1].content
 
         # Retrieve relevant documents to user_message
-        docs = self.retriever.invoke(user_message, k=5)
+        docs = self.retriever.invoke(user_message)
         context = "\n\n".join([doc.page_content for doc in docs])
 
         # Filter messages in state to only contain conversation messages (no system messages)
@@ -104,13 +111,12 @@ class Chatbot:
             ]
     
             # Generate summary 
-            summary_message = self.llm.invoke(
+            summary_message = self.generator.invoke(
                 [HumanMessage(content=f"Conversation:\n{clean_history}\n\nInstructions:\n{CHATBOT_SUMMARY_SYSTEM_PROMPT}")]
             )
 
             # Try to safely create delete messages, but have a fallback approach
             delete_messages = []
-            safe_delete = True
             
             for m in state["messages"]:
                 if hasattr(m, 'id') and m.id is not None:
@@ -147,7 +153,7 @@ class Chatbot:
             }
 
     
-    async def get_stream_response(self, user_id, user_prompt, thread_id="default"):
+    async def invoke(self, user_id, user_prompt):
         """Get response as a stream using the LangGraph workflow with call_model_streaming"""
 
         user = UserController.get_user_by_id(user_id)
@@ -158,7 +164,7 @@ class Chatbot:
         try:
             # Get user-specific app with dedicated memory for context
             app = self.get_user_app(user_id)
-            config = {"configurable": {"thread_id": thread_id}}
+            config = {"configurable": {"thread_id": "default"}}
 
             # Get current state to build context with new user message
             current_state = app.get_state(config)
@@ -179,11 +185,11 @@ class Chatbot:
                 nonlocal full_response
                 try:
                     # Use the LLM's streaming
-                    for chunk in self.llm.stream(messages_for_llm):
+                    for chunk in self.generator.stream(messages_for_llm):
                         if hasattr(chunk, 'content') and chunk.content:
                             full_response += chunk.content
                             yield chunk.content
-                    
+
                     # Create the AI response message
                     response_message = AIMessage(content=full_response)
 

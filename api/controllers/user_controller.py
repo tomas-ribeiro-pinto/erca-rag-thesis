@@ -1,4 +1,3 @@
-import sqlite3
 from api.settings import CHATBOT_DEFAULT_GREETING_MESSAGE
 from  api.controllers.database_controller import DatabaseController
 
