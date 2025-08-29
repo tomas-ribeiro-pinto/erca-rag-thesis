@@ -24,7 +24,7 @@ from flask import current_app as app
 
 from api import initialise_app, get_available_chatbots
 from api.models.chatbot import Chatbot
-from api.settings import CHATBOT_API_DB_PATH
+from api.settings import LLM_TEMPERATURE
 
 # Initialize the app and load chatbots
 app = initialise_app()
@@ -56,48 +56,128 @@ def get_available_chatbots():
 
 @app.route('/api/chatbot/create', methods=['POST'])
 def create_chatbot():
-    data = request.get_json()
-    chatbot_name = data.get('name')
-    system_prompt = data.get('system_prompt')
-    documents_path = data.get('documents_path')
-    llm_model = data.get('llm_model')
+    isRequired = True
 
-    if not chatbot_name or not system_prompt or not documents_path or not llm_model:
-        return jsonify({'error': 'Please provide all mandatory parameters.'}), 400
+    fields = [
+        ('name', isRequired),
+        ('area_expertise', isRequired),
+        ('module_name', isRequired),
+        ('system_guidelines', isRequired),
+        ('llm_model', isRequired),
+        ('max_tokens', isRequired),
+        ('documents_path', isRequired),
+    ]
 
-    id, vector_db_path = ChatbotController.create_chatbot_instance(chatbot_name, llm_model, 0.6, 4096, documents_path, vector_db_path=None)
+    data = get_data_from_request(request, fields)
 
-    new_chatbot = Chatbot({
-            "name": chatbot_name,
-            "chatbot_id": id,
-            "llm_model": llm_model,
-            "temperature": 0.6,
-            "num_predict": 4096,
-            "vector_db_path": vector_db_path
-        }, chatbot_api_db_path=CHATBOT_API_DB_PATH)
-    available_chatbots[new_chatbot.id] = new_chatbot
+    try:
+        max_tokens = int(data.get("max_tokens")) 
+    except:
+        return jsonify({'error': 'Max tokens needs to be a number.'}), 400
+
+    try: 
+        id, chatbot_instance = ChatbotController.create_chatbot_instance(
+            name = data.get("name"), 
+            area_expertise = data.get("area_expertise"), 
+            module_name = data.get("module_name"), 
+            llm_model = data.get("llm_model"), 
+            temperature = LLM_TEMPERATURE, 
+            max_tokens = max_tokens, 
+            documents_path = data.get("documents_path")
+        )
+        available_chatbots[id] = chatbot_instance
+
+    except Exception as e:
+        return jsonify({'error': "Something went wrong:" + str(e)}), 500
 
     return jsonify({'is_created': True, 'chatbot_id': id}), 201
 
 @app.route('/api/chatbot/delete', methods=['POST', 'DELETE'])
 def delete_chatbot():
-    # Handle both JSON and form data
-    if request.is_json:
-        data = request.get_json()
-    else:
-        data = request.form.to_dict() or request.args.to_dict()
+    isRequired = True
+
+    fields = [
+        ('chatbot_id', isRequired),
+    ]
+
+    data = get_data_from_request(request, fields)
     
-    chatbot_id = data.get('chatbot_id')
-
-    if not chatbot_id:
-        return jsonify({'error': 'Please provide all mandatory parameters.'}), 400
-
-    if chatbot_id not in available_chatbots.keys():
+    if data.get('chatbot_id') not in available_chatbots.keys():
         return jsonify({'error': 'Chatbot not found.'}), 404
 
-    ChatbotController.delete_chatbot_instance(chatbot_id)
-    available_chatbots.pop(chatbot_id, None)
+    try: 
+        ChatbotController.delete_chatbot_instance(data.get('chatbot_id'))
+        available_chatbots.pop(data.get('chatbot_id'), None)
+
+    except Exception as e:
+        return jsonify({'error': "Something went wrong:" + str(e)}), 500
+
     return jsonify({'is_deleted': True}, 200)
+
+@app.route('/api/chatbot/update-settings', methods=['POST'])
+def update_chatbot_settings():
+    isRequired = True
+
+    fields = [
+        ('chatbot_id', isRequired),
+        ('name', isRequired),
+        ('area_expertise', isRequired),
+        ('module_name', isRequired),
+        ('system_guidelines', isRequired),
+        ('llm_model', isRequired),
+        ('max_tokens', isRequired),
+    ]
+
+    data = get_data_from_request(request, fields)
+    
+    if data.get('chatbot_id') not in available_chatbots.keys():
+        return jsonify({'error': 'Chatbot not found.'}), 404
+
+    try:
+        chatbot_instance = ChatbotController.update_chatbot_instance_settings(
+            id=data.get('chatbot_id'),
+            name=data.get('name'),
+            area_expertise=data.get('area_expertise'),
+            module_name=data.get('module_name'),
+            llm_model=data.get('llm_model'),
+            system_guidelines=data.get('system_guidelines'),
+            max_tokens=data.get('max_tokens')
+        )
+        available_chatbots[data.get('chatbot_id')] = chatbot_instance
+
+    except Exception as e:
+        return jsonify({'error': "Something went wrong:" + str(e)}), 500
+
+    return jsonify({'is_updated': True}, 200)
+
+@app.route('/api/chatbot/update-memory', methods=['POST'])
+def update_chatbot_memory():
+    isRequired = True
+
+    fields = [
+        ('chatbot_id', isRequired),
+        ('deleted_documents', not isRequired),
+        ('added_documents', not isRequired),
+    ]
+
+    data = get_data_from_request(request, fields)
+
+    if data.get("chatbot_id") not in available_chatbots.keys():
+        return jsonify({'error': 'Chatbot not found.'}), 404
+    
+    try:
+        documents_not_updated = ChatbotController.update_chatbot_instance_memory(
+            instance = available_chatbots[data.get("chatbot_id")],
+            deleted_files = data.get('deleted_documents', []),
+            added_files = data.get('added_documents', []),
+        )
+        
+        if len(documents_not_updated) > 0:
+            return jsonify({'error': f'Some documents could not be updated. The following documents were not updated: {", ".join(documents_not_updated)}'}), 400
+    except Exception as e:
+        return jsonify({'error': "Something went wrong:" + str(e)}), 500
+    
+    return jsonify({'is_updated': True}, 200)
 
 @app.route('/api/chatbot/<chatbot_id>/prompt', methods=['POST'])
 def stream_prompt_to_chatbot(chatbot_id):
@@ -203,6 +283,22 @@ def get_user_from_request(request, chatbot_id):
             user = UserController.get_user_by_email(user_email)
             UserController.register_user_with_chatbot(user['id'], chatbot_id, user_name)
     return user
+
+def get_data_from_request(request, fields):
+    # Handle both JSON and form data
+    if request.is_json:
+        data = request.get_json()
+    else:
+        data = request.form.to_dict() or request.args.to_dict()
+
+    required_fields = [
+        (str(field), data.get(str(field))) for field, isRequired in fields if isRequired
+    ]
+    missing = [field for field, value in required_fields if not value]
+    if missing:
+        return jsonify({'error': f"Please provide all mandatory parameters. Missing parameters: {', '.join(missing)}"}), 400
+
+    return data
 
 if __name__ == "__main__":
     app.run()

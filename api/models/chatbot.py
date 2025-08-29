@@ -14,7 +14,7 @@ Description:
 """
 
 from api.controllers.user_controller import UserController
-from api.settings import CHATBOT_SYSTEM_PROMPT, MAX_MESSAGES, CHATBOT_SUMMARY_SYSTEM_PROMPT, CHATBOT_PERSONA
+from api.settings import CHATBOT_GUIDELINES, CHATBOT_SYSTEM_PROMPT, MAX_MESSAGES, CHATBOT_SUMMARY_SYSTEM_PROMPT
 from chatbot.rag_generator import RagGenerator
 from chatbot.rag_retriever import RagRetriever
 from langchain_core.prompts import ChatPromptTemplate
@@ -26,7 +26,7 @@ import os
 
 class Chatbot:
     def __init__(self, instance, chatbot_api_db_path="./databases/chatbot_instances.db"):
-        self.chatbot_id = instance["chatbot_id"]
+        self.chatbot_id = instance["id"]
         self.name = instance["name"]
 
         project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -34,12 +34,14 @@ class Chatbot:
         self.retriever = RagRetriever(vector_db_path=vector_db_path, chatbot_id=self.chatbot_id, documents_path=instance["documents_path"])
         self.generator = RagGenerator(model = instance["llm_model"],
             temperature = instance["temperature"],
-            num_predict = instance["num_predict"],)
+            num_predict = instance["max_tokens"],)
         self.user_history_db_path = os.path.join(project_root, chatbot_api_db_path)
 
         system_prompt = CHATBOT_SYSTEM_PROMPT.format(
-            persona = instance["system_persona"] if "system_persona" in instance else CHATBOT_PERSONA,
-            max_tokens = instance["num_predict"],
+            guidelines = instance["system_guidelines"] if "system_guidelines" in instance else CHATBOT_GUIDELINES,
+            module_subject = instance["area_expertise"] if "area_expertise" in instance else "Unknown",
+            module_name = instance["module_name"] if "module_name" in instance else "Unknown",
+            max_tokens = instance["max_tokens"],
             context = "{context}" # Placeholder for context insertion
         )
 
@@ -186,7 +188,7 @@ class Chatbot:
                 try:
                     # Use the LLM's streaming
                     async for chunk in self.generator.stream(messages_for_llm):
-                        if chunk:  # chunk is already the content string from RagGenerator
+                        if chunk:
                             full_response += chunk
                             yield chunk
 
