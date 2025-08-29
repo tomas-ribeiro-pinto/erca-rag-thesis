@@ -120,7 +120,7 @@ class RagRetriever:
         return uuids
 
     def save_pdf_documents_at_path(self, documents_path):
-        pdf_documents = glob(f"{documents_path}/*.pdf")[:2]
+        pdf_documents = glob(f"{documents_path}/*.pdf")
         self.save_documents(pdf_documents)
 
     def invoke(self, query):
