@@ -26,7 +26,7 @@ import os
 
 class Chatbot:
     def __init__(self, instance, chatbot_api_db_path="./databases/chatbot_instances.db"):
-        self.chatbot_id = instance["chatbot_id"]
+        self.chatbot_id = instance["id"]
         self.name = instance["name"]
 
         project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -34,14 +34,14 @@ class Chatbot:
         self.retriever = RagRetriever(vector_db_path=vector_db_path, chatbot_id=self.chatbot_id, documents_path=instance["documents_path"])
         self.generator = RagGenerator(model = instance["llm_model"],
             temperature = instance["temperature"],
-            num_predict = instance["num_predict"],)
+            num_predict = instance["max_tokens"],)
         self.user_history_db_path = os.path.join(project_root, chatbot_api_db_path)
 
         system_prompt = CHATBOT_SYSTEM_PROMPT.format(
             guidelines = instance["system_guidelines"] if "system_guidelines" in instance else CHATBOT_GUIDELINES,
-            module_subject = instance["module_subject"] if "module_subject" in instance else "Unknown",
+            module_subject = instance["area_expertise"] if "area_expertise" in instance else "Unknown",
             module_name = instance["module_name"] if "module_name" in instance else "Unknown",
-            max_tokens = instance["num_predict"],
+            max_tokens = instance["max_tokens"],
             context = "{context}" # Placeholder for context insertion
         )
 

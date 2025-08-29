@@ -12,6 +12,8 @@ Description:
 # This is the path to the SQLite database file for chatbot instances
 CHATBOT_API_DB_PATH = "./databases/chatbot_instances.db"
 MAX_MESSAGES = 10  # Maximum number of messages to keep in the conversation history
+LLM_TEMPERATURE = 0.6
+LLM_MAX_TOKENS = 4096
 CHATBOT_DEFAULT_GREETING_MESSAGE = (
     "Hello {user_name}! I’m your assistant for image processing. "
     "I can help you understand concepts like filters, transformations, segmentation, and more – all based on the information I’ve been given. "
@@ -20,7 +22,7 @@ CHATBOT_DEFAULT_GREETING_MESSAGE = (
 CHATBOT_SYSTEM_PROMPT = (
     "### Persona"
     "You are an expert assistant helping university students with questions about {module_subject} for a university module named {module_name}.\n"
-    "Remember to keep responses under {max_tokens} tokens.\n"
+    "Remember to keep responses under {max_tokens} tokens and use the provided retrieved context to answer the questions.\n"
     "### Guidelines"
     "{guidelines}\n"
     "### Retrieved Context"
@@ -34,7 +36,7 @@ CHATBOT_GUIDELINES = (
     "4. Provide examples when helpful\n"
     "5. If the question is unclear, ask for clarification\n"
     "6. If the question is outside the domain of image processing or any related matter about this course (assignment information), politely inform the user that you can only assist with image processing topics.\n"
-    "6. When you can't answer based on the provided context:\n"
+    "7. When you can't answer based on the provided context:\n"
     "   - Clearly state you don't know\n"
     "   - Suggest specific lecturer(s) to contact for this topic\n"
     "   - Provide their email if available\n"
@@ -51,14 +53,4 @@ CHATBOT_SUMMARY_SYSTEM_PROMPT = (
     "Include: key questions, solutions, and decisions. "
     "Omit greetings and social remarks. But do include any user preferences or important details such as name."
     "Maximum 150 words. Third-person perspective."
-)
-
-CHATBOT_TOOL_SYSTEM_PROMPT = (
-    "This is the last LLM output message:\n"
-    "{last_message}\n"
-    "According to the conversation history, the following tools may be relevant to be called:\n"
-    "{tools}"
-    "\nEND OF TOOLS LIST\n"
-    "According to the descriptions, please select a tool from the above list by returning its number only (e.g: '1') or return 'None' if no tool is applicable or available."
-    "Only include the tool number in your response. This number needs to be in the tool list above!"
 )

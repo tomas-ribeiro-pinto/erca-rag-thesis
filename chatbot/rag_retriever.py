@@ -6,7 +6,7 @@ from flask import current_app as app
 from langchain_milvus import BM25BuiltInFunction, Milvus
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from api.controllers.document_controller import DocumentChunkController
+from api.controllers.document_chunk_controller import DocumentChunkController
 from chatbot.document_parsers import DocumentParsers
 
 class RagRetriever:
@@ -111,19 +111,23 @@ class RagRetriever:
 
         # Add documents to vector store
         self.vector_store.add_documents(chunks, ids=uuids)
-        app.logger.info(f"Loaded and indexed {len(chunks)} document chunks")
+        print(f"Loaded and indexed {len(chunks)} document chunks")
 
     def delete_document(self, document_name):
         uuids = DocumentChunkController.get_document_chunks_uuids_by_document_name(self.chatbot_id, document_name)
         DocumentChunkController.delete_document_chunks_by_document_name(document_name, self.chatbot_id)
         self.vector_store.delete_documents(uuids)
+        return uuids
 
     def save_pdf_documents_at_path(self, documents_path):
-        pdf_documents = glob(f"{documents_path}/*.pdf")
+        pdf_documents = glob(f"{documents_path}/*.pdf")[:2]
         self.save_documents(pdf_documents)
 
     def invoke(self, query):
         # Retrieve documents based on the query
-        self.retriever = self.vector_store.as_retriever()
-        results = self.retriever.invoke(query)
+        # Rerank results using RRF
+        results = self.vector_store.similarity_search(
+            query, k=5, ranker_type="rrf"
+        )
+
         return results

@@ -17,7 +17,7 @@ def output_email_button(email_address="", subject="", body="", button_placeholde
 
 @tool
 def output_context_reference(materials_discussed=""):
-    """Use this tool to reference specific course materials, lectures, or lab sessions from retrieved context when answering academic questions. Use when the answer directly relates to specific course content that should be cited."""
+    """Use this tool to reference specific course materials, lectures, or lab sessions from retrieved context when answering academic questions. Use when the answer directly relates to specific course content that should be cited, include the name of the material and the relevant details such as the number of the slide and lecture."""
 
     output = f"\n\n*Materials discussed:*\n\n{materials_discussed}"
 
@@ -87,6 +87,7 @@ class RagGenerator:
                         result_queue.put(tool_result)
                         return
                     elif tool_call['name'] == 'output_context_reference':
+                        args = tool_call['args']
                         tool_result = output_context_reference.invoke(args)
                         result_queue.put(tool_result)
                         return
