@@ -14,8 +14,9 @@ Description:
 
 import asyncio
 import sqlite3
-from flask import Response
+from flask import Response, send_from_directory, abort
 import json
+import os
 
 from api.controllers.chatbot_controller import ChatbotController
 from api.controllers.user_controller import UserController
@@ -53,6 +54,23 @@ def get_available_chatbots():
         for chatbot in available_chatbots.values()
     ]
     return jsonify({'available_chatbots': chatbot_instances})
+
+@app.route('/documents/<filename>')
+def serve_document(filename):
+    """Serve PDF documents from the documents folder"""
+    try:
+        # Get the absolute path to the documents folder
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        documents_path = os.path.join(project_root, 'documents')
+
+        # Check if the file exists in the documents folder
+        file_path = os.path.join(documents_path, filename)
+        if not os.path.exists(file_path):
+            abort(404)
+            
+        return send_from_directory(documents_path, filename, as_attachment=False)
+    except Exception as e:
+        abort(404)
 
 @app.route('/api/chatbot/create', methods=['POST'])
 def create_chatbot():
@@ -193,7 +211,7 @@ def stream_prompt_to_chatbot(chatbot_id):
     try:
         user = get_user_from_request(request, chatbot_id)
         user_id = user['id']
-        
+
         data = request.get_json()
         user_prompt = data.get('prompt', '')
         

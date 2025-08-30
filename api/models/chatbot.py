@@ -47,9 +47,10 @@ class Chatbot:
             context = "{context}" # Placeholder for context insertion
         )
 
-        self.prompt_template = ChatPromptTemplate.from_messages(
-            [("system", system_prompt), ("user", "{user_prompt}")]
-        )
+        self.prompt_template = ChatPromptTemplate.from_messages([
+            ("system", system_prompt + "\n\n### Available Sources for Citation\nIf relevant to your answer, you should cite these sources using the output_context_reference tool: {sources}"),
+            ("user", "{user_prompt}")
+        ])
         
         # Initialize the workflow with a state graph (without compiling)
         self.workflow = StateGraph(state_schema=MessagesState)
@@ -98,6 +99,9 @@ class Chatbot:
         # Retrieve relevant documents to user_message
         docs = self.retriever.invoke(user_message)
         context = "\n\n".join([doc.page_content for doc in docs])
+        
+        # Extract unique source files for citation
+        sources = list(set([doc.metadata.get('source', 'unknown') for doc in docs if doc.metadata.get('source', 'unknown') != 'unknown']))
 
         # Filter messages in state to only contain conversation messages (no system messages)
         conversation_history = [
@@ -135,7 +139,11 @@ class Chatbot:
             human_message = HumanMessage(content=user_message)
 
             # Format the prompt_template with retrieved context and user message
-            formatted_messages = self.prompt_template.format_messages(context=context, user_prompt=user_message)
+            formatted_messages = self.prompt_template.format_messages(
+                context=context, 
+                sources=sources,
+                user_prompt=user_message
+            )
             messages_for_llm = [summary_message, human_message] + formatted_messages
             
             return {
@@ -145,7 +153,11 @@ class Chatbot:
             }
         else:
             # Format the prompt with context for the current conversation
-            formatted_messages = self.prompt_template.format_messages(context=context, user_prompt=user_message)
+            formatted_messages = self.prompt_template.format_messages(
+                context=context, 
+                sources=sources,
+                user_prompt=user_message
+            )
             # Use only the system message from formatted_messages and keep conversation history
             system_message = formatted_messages[0]  # The system message with context
             messages_for_llm = [system_message] + state["messages"]

@@ -1,31 +1,10 @@
-from langchain_ollama import ChatOllama
-from langchain_core.messages import AIMessage
-from langchain_core.tools import tool
-
 import threading
 import queue
 
+from langchain_ollama import ChatOllama
+
 from components.chat_open_router import ChatOpenRouter
-
-@tool
-def output_email_button(email_address: str = "", subject: str = "", body: str = "", button_placeholder: str = "Send email", button_pre_text: str = "\n*You can use the following button to send an email:*\n\n") -> AIMessage:
-    """Creates a draft email button with subject and body. ONLY use this tool when the user asks to contact someone or may benefit from contacting someone, needs help with coursework submission, has questions about grades, or needs to report technical issues. Do not use for general module questions that can be answered from the course materials."""
-
-    output = f"\n\n{button_pre_text} <a class=\"send-btn\" href=\"mailto:{email_address}?subject={subject}&body={body}\">{button_placeholder}</a>"
-    
-    return AIMessage(
-        content = output
-    )
-
-@tool
-def output_context_reference(materials_discussed: str = "") -> AIMessage:
-    """Use this tool to reference specific course materials, lectures, or lab sessions from retrieved context when answering academic questions. Use when the answer directly relates to specific course content that should be cited, include the name of the material and the relevant details such as the number of the slide and lecture."""
-
-    output = f"\n\n*Materials discussed:*\n\n{materials_discussed}"
-
-    return AIMessage(
-        content = output
-    )
+from components.tools import output_email_button, output_context_reference
 
 class RagGenerator:
     def __init__(self, model, temperature, num_predict, use_ollama=False):
