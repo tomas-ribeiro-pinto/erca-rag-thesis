@@ -6,7 +6,7 @@ import os
 
 from api.models.chatbot import Chatbot
 from api.settings import CHATBOT_API_DB_PATH
-from chatbot.rag_retriever import RagRetriever
+from components.rag_retriever import RagRetriever
 
 class ChatbotController():
     def create_chatbot_instances_table():
@@ -22,11 +22,12 @@ class ChatbotController():
             max_tokens INTEGER NOT NULL,
             documents_path TEXT NOT NULL,
             vector_db_path TEXT,
+            use_ollama INTEGER NOT NULL DEFAULT 0,
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         """, "chatbot_instances")
 
-    def run_chatbot_instance(id, name, area_expertise, module_name, system_guidelines, llm_model, max_tokens, documents_path, vector_db_path, temperature, chatbot_api_db_path=CHATBOT_API_DB_PATH):
+    def run_chatbot_instance(id, name, area_expertise, module_name, system_guidelines, llm_model, max_tokens, documents_path, vector_db_path, temperature, use_ollama, chatbot_api_db_path=CHATBOT_API_DB_PATH):
         chatbot_instance = Chatbot({
             "id": id,
             "name": name,
@@ -37,7 +38,8 @@ class ChatbotController():
             "temperature": temperature,
             "max_tokens": max_tokens,
             "documents_path": documents_path,
-            "vector_db_path": vector_db_path
+            "vector_db_path": vector_db_path,
+            "use_ollama": use_ollama
         }, chatbot_api_db_path=chatbot_api_db_path)
         return chatbot_instance
     
@@ -47,13 +49,13 @@ class ChatbotController():
     def get_chatbot_instance_by_id(id):
         return DatabaseController.execute_query("SELECT * FROM chatbot_instances WHERE id = ?", (id,))[0]
 
-    def create_chatbot_instance(name, area_expertise, module_name, llm_model, temperature, max_tokens, system_guidelines, documents_path, vector_db_path=None):
+    def create_chatbot_instance(name, area_expertise, module_name, llm_model, temperature, max_tokens, system_guidelines, documents_path, use_ollama=0, vector_db_path=None):
         if vector_db_path is None:
             query = """
-                INSERT INTO chatbot_instances (name, area_expertise, module_name, llm_model, temperature, system_guidelines, max_tokens, documents_path)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO chatbot_instances (name, area_expertise, module_name, llm_model, temperature, system_guidelines, max_tokens, documents_path, use_ollama)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """
-            params = (name, area_expertise, module_name, llm_model, temperature, system_guidelines, max_tokens, documents_path)
+            params = (name, area_expertise, module_name, llm_model, temperature, system_guidelines, max_tokens, documents_path, use_ollama)
             id = DatabaseController.execute_query(query, params)
             # Create vector database with proper .db extension
             vector_db_path = f"./databases/rag_milvus_{id}.db"
@@ -66,10 +68,10 @@ class ChatbotController():
         
         else:
             query = """
-                INSERT INTO chatbot_instances (name, area_expertise, module_name, llm_model, temperature, system_guidelines, max_tokens, documents_path, vector_db_path)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO chatbot_instances (name, area_expertise, module_name, llm_model, temperature, system_guidelines, max_tokens, documents_path, vector_db_path, use_ollama)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """
-            params = (name, area_expertise, module_name, llm_model, temperature, system_guidelines, max_tokens, documents_path, vector_db_path)
+            params = (name, area_expertise, module_name, llm_model, temperature, system_guidelines, max_tokens, documents_path, vector_db_path, use_ollama)
             id = DatabaseController.execute_query(query, params)
 
         chatbot_instance = ChatbotController.run_chatbot_instance(
@@ -82,7 +84,8 @@ class ChatbotController():
             temperature = temperature,
             max_tokens = max_tokens, 
             documents_path = documents_path,
-            vector_db_path=vector_db_path, 
+            vector_db_path=vector_db_path,
+            use_ollama=use_ollama
         )
          
         return id, chatbot_instance
@@ -121,7 +124,8 @@ class ChatbotController():
             llm_model=instance['llm_model'],
             max_tokens=instance['max_tokens'],
             documents_path=instance['documents_path'],
-            vector_db_path=instance['vector_db_path']
+            vector_db_path=instance['vector_db_path'],
+            use_ollama=instance['use_ollama']
         )
         return chatbot_instance
     

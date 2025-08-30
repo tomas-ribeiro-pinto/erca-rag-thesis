@@ -10,7 +10,11 @@ Description:
 ================================================================================
 """
 
+import os
 from logging.config import dictConfig
+
+# Set environment variable to disable tokenizers parallelism warning
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 from api.controllers.chatbot_controller import ChatbotController
 from api.controllers.document_chunk_controller import DocumentChunkController
@@ -57,11 +61,11 @@ def initialise_sqlite_database():
         app.logger.warning("No chatbot instances found, inserting default instances.")
         ChatbotController.create_chatbot_instance(name="Image Processing chatbot", area_expertise="Image Processing", module_name="Introduction to Image Processing", llm_model="llama3.1", 
                                                   temperature=LLM_TEMPERATURE, max_tokens=LLM_MAX_TOKENS, system_guidelines=CHATBOT_GUIDELINES, 
-                                                  documents_path="./documents", vector_db_path="./databases/rag_milvus.db")
+                                                  documents_path="./documents", vector_db_path="./databases/rag_milvus.db", use_ollama=1)
         ChatbotController.create_chatbot_instance(name="chatbot2", area_expertise="Image Processing", module_name="Introduction to Image Processing", llm_model="gemma3", 
                                                   temperature=LLM_TEMPERATURE, max_tokens=LLM_MAX_TOKENS, system_guidelines=CHATBOT_GUIDELINES, 
-                                                  documents_path="./documents", vector_db_path="./databases/rag_milvus.db")
-        ChatbotController.create_chatbot_instance(name="chatbot3", area_expertise="Image Processing", module_name="Introduction to Image Processing", llm_model="deepseek-r1", 
+                                                  documents_path="./documents", vector_db_path="./databases/rag_milvus.db", use_ollama=1)
+        ChatbotController.create_chatbot_instance(name="chatbot3", area_expertise="Image Processing", module_name="Introduction to Image Processing", llm_model="meta-llama/llama-4-maverick:free", 
                                                   temperature=LLM_TEMPERATURE, max_tokens=LLM_MAX_TOKENS, system_guidelines=CHATBOT_GUIDELINES, 
                                                   documents_path="./documents", vector_db_path="./databases/rag_milvus.db")
 
@@ -88,6 +92,7 @@ def load_chatbots():
             max_tokens=row["max_tokens"],
             documents_path=row["documents_path"],
             vector_db_path=row["vector_db_path"],
+            use_ollama=row["use_ollama"]
         )
 
     return available_chatbots

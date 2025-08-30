@@ -7,7 +7,7 @@ from langchain_milvus import BM25BuiltInFunction, Milvus
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from api.controllers.document_chunk_controller import DocumentChunkController
-from chatbot.document_parsers import DocumentParsers
+from components.document_parsers import DocumentParsers
 
 class RagRetriever:
     def __init__(self, chatbot_id=None, vector_db_path=None, documents_path=None):

@@ -5,8 +5,10 @@ from langchain_core.tools import tool
 import threading
 import queue
 
+from components.chat_open_router import ChatOpenRouter
+
 @tool
-def output_email_button(email_address="", subject="", body="", button_placeholder="Send email", button_pre_text="\n*You can use the following button to send an email:*\n\n"):
+def output_email_button(email_address: str = "", subject: str = "", body: str = "", button_placeholder: str = "Send email", button_pre_text: str = "\n*You can use the following button to send an email:*\n\n") -> AIMessage:
     """Creates a draft email button with subject and body. ONLY use this tool when the user asks to contact someone or may benefit from contacting someone, needs help with coursework submission, has questions about grades, or needs to report technical issues. Do not use for general module questions that can be answered from the course materials."""
 
     output = f"\n\n{button_pre_text} <a class=\"send-btn\" href=\"mailto:{email_address}?subject={subject}&body={body}\">{button_placeholder}</a>"
@@ -16,7 +18,7 @@ def output_email_button(email_address="", subject="", body="", button_placeholde
     )
 
 @tool
-def output_context_reference(materials_discussed=""):
+def output_context_reference(materials_discussed: str = "") -> AIMessage:
     """Use this tool to reference specific course materials, lectures, or lab sessions from retrieved context when answering academic questions. Use when the answer directly relates to specific course content that should be cited, include the name of the material and the relevant details such as the number of the slide and lecture."""
 
     output = f"\n\n*Materials discussed:*\n\n{materials_discussed}"
@@ -26,19 +28,23 @@ def output_context_reference(materials_discussed=""):
     )
 
 class RagGenerator:
-    def __init__(self, model, temperature, num_predict):
+    def __init__(self, model, temperature, num_predict, use_ollama=False):
         self.tools = [output_email_button, output_context_reference]
-        self.llm = ChatOllama(
-            model=model,
-            temperature=temperature,
+        if use_ollama:
+            self.llm = ChatOllama(
+                model=model,
+                temperature=temperature,
             num_predict=num_predict,
         )
+        else:
+            self.llm = ChatOpenRouter(
+                model_name=model,
+                temperature=temperature,
+                max_tokens=num_predict,
+            )
+
         # Tool LLM with tools for tool calling
-        self.tool_llm = ChatOllama(
-            model=model,
-            temperature=temperature,
-            num_predict=num_predict,
-        ).bind_tools(self.tools)
+        self.tool_llm = self.llm.bind_tools(self.tools)
 
     def invoke(self, prompt):
         response = self.llm.invoke(prompt)

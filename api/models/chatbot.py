@@ -15,8 +15,8 @@ Description:
 
 from api.controllers.user_controller import UserController
 from api.settings import CHATBOT_GUIDELINES, CHATBOT_SYSTEM_PROMPT, MAX_MESSAGES, CHATBOT_SUMMARY_SYSTEM_PROMPT
-from chatbot.rag_generator import RagGenerator
-from chatbot.rag_retriever import RagRetriever
+from components.rag_generator import RagGenerator
+from components.rag_retriever import RagRetriever
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage, RemoveMessage
 from langgraph.checkpoint.memory import MemorySaver
@@ -34,7 +34,9 @@ class Chatbot:
         self.retriever = RagRetriever(vector_db_path=vector_db_path, chatbot_id=self.chatbot_id, documents_path=instance["documents_path"])
         self.generator = RagGenerator(model = instance["llm_model"],
             temperature = instance["temperature"],
-            num_predict = instance["max_tokens"],)
+            num_predict = instance["max_tokens"],
+            use_ollama=instance["use_ollama"]
+        )
         self.user_history_db_path = os.path.join(project_root, chatbot_api_db_path)
 
         system_prompt = CHATBOT_SYSTEM_PROMPT.format(

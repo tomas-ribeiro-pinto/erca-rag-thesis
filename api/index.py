@@ -190,10 +190,10 @@ def stream_prompt_to_chatbot(chatbot_id):
     if chatbot_id not in available_chatbots.keys():
         return jsonify({'error': 'Chatbot not found'}), 404
 
-    user = get_user_from_request(request, chatbot_id)
-    user_id = user['id']
-
     try:
+        user = get_user_from_request(request, chatbot_id)
+        user_id = user['id']
+        
         data = request.get_json()
         user_prompt = data.get('prompt', '')
         
@@ -270,35 +270,50 @@ def get_chatbot_history(chatbot_id):
         return jsonify({'error': "Something went wrong:" + str(e)}), 500
 
 def get_user_from_request(request, chatbot_id):
-    data = request.get_json()
-    user_email = data.get('user_email', None)
-    user_name = data.get('user_name', "")
+    try:
+        data = request.get_json()
+        if not data:
+            raise ValueError("No JSON data provided")
+            
+        user_email = data.get('user_email', None)
+        user_name = data.get('user_name', "")
 
-    if user_email is None or user_email == "" or user_email == "None":
-        user = UserController.get_guest_user(chatbot_id)
-    else:
-        user = UserController.get_user_by_email(user_email)
-        if user is None:
-            UserController.create_user(username=user_name, user_email=user_email)
+        if user_email is None or user_email == "" or user_email == "None":
+            user = UserController.get_guest_user(chatbot_id)
+        else:
             user = UserController.get_user_by_email(user_email)
-            UserController.register_user_with_chatbot(user['id'], chatbot_id, user_name)
-    return user
+            if user is None:
+                UserController.create_user(username=user_name, user_email=user_email)
+                user = UserController.get_user_by_email(user_email)
+                UserController.register_user_with_chatbot(user['id'], chatbot_id, user_name)
+        return user
+    except Exception as e:
+        print(f"Error in get_user_from_request: {str(e)}")
+        raise
 
 def get_data_from_request(request, fields):
     # Handle both JSON and form data
-    if request.is_json:
-        data = request.get_json()
-    else:
-        data = request.form.to_dict() or request.args.to_dict()
+    try:
+        if request.is_json:
+            data = request.get_json()
+            if not data:
+                raise ValueError("No JSON data provided")
+        else:
+            data = request.form.to_dict() or request.args.to_dict()
+            if not data:
+                raise ValueError("No form or query data provided")
 
-    required_fields = [
-        (str(field), data.get(str(field))) for field, isRequired in fields if isRequired
-    ]
-    missing = [field for field, value in required_fields if not value]
-    if missing:
-        return jsonify({'error': f"Please provide all mandatory parameters. Missing parameters: {', '.join(missing)}"}), 400
+        required_fields = [
+            (str(field), data.get(str(field))) for field, isRequired in fields if isRequired
+        ]
+        missing = [field for field, value in required_fields if not value]
+        if missing:
+            return jsonify({'error': f"Please provide all mandatory parameters. Missing parameters: {', '.join(missing)}"}), 400
 
-    return data
+        return data
+    except Exception as e:
+        print(f"Error in get_data_from_request: {str(e)}")
+        return jsonify({'error': f"Error processing request data: {str(e)}"}), 400
 
 if __name__ == "__main__":
     app.run()
