@@ -16,3 +16,5 @@ api/models/__pycache__/chatbot.cpython-312.pyc
 api/controllers/__pycache__/chatbot_controller.cpython-312.pyc
 databases/.DS_Store
 api/controllers/__pycache__/chatbot_controller.cpython-312.pyc
+/.deepeval
+.env
