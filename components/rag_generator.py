@@ -1,3 +1,4 @@
+import asyncio
 import threading
 import queue
 
@@ -25,8 +26,27 @@ class RagGenerator:
         # Tool LLM with tools for tool calling
         self.tool_llm = self.llm.bind_tools(self.tools)
 
-    def invoke(self, prompt):
-        response = self.llm.invoke(prompt)
+    def invoke(self, prompt, async_mode=False):
+        # Create a queue to communicate between threads
+        tool_result_queue = queue.Queue()
+        
+        t1 = threading.Thread(target=self.check_tool_calling, args=(prompt, tool_result_queue))
+        t1.start()
+
+        response = self.llm.invoke(prompt).content
+        
+        # Wait for the tool checking thread to complete
+        t1.join()
+        
+        # Check if there's a tool result to append
+        try:
+            tool_result = tool_result_queue.get_nowait()
+            if tool_result and hasattr(tool_result, 'content'):
+                response += tool_result.content
+        except queue.Empty:
+            # No tool result available
+            pass
+
         return response
     
     def stream(self, prompt):
@@ -73,6 +93,20 @@ class RagGenerator:
                         return
                     elif tool_call['name'] == 'output_context_reference':
                         args = tool_call['args']
+                        # Debug print to see the actual structure
+                        print(f"Tool call args: {args}")
+                        
+                        # Handle case where cited_sources might be in schema format
+                        if 'cited_sources' in args and isinstance(args['cited_sources'], dict):
+                            if 'items' in args['cited_sources']:
+                                args['cited_sources'] = args['cited_sources']['items']
+                            elif 'value' in args['cited_sources']:
+                                args['cited_sources'] = args['cited_sources']['value']
+                            else:
+                                # If it's just a type definition, skip this tool call
+                                print(f"Skipping tool call with schema-only args: {args}")
+                                result_queue.put(None)
+                                return
                         tool_result = output_context_reference.invoke(args)
                         result_queue.put(tool_result)
                         return

@@ -227,7 +227,7 @@ def stream_prompt_to_chatbot(chatbot_id):
                 try:
                     # Get the async generator from the chatbot
                     async def run_streaming():
-                        stream_gen = await chatbot.invoke(user_id, user_prompt)
+                        stream_gen = await chatbot.stream(user_id, user_prompt)
                         async for chunk in stream_gen:
                             yield f"data: {json.dumps({'chunk': chunk})}\n\n"
                         yield f"data: {json.dumps({'done': True})}\n\n"

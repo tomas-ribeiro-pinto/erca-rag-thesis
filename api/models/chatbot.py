@@ -25,9 +25,10 @@ from langgraph.graph import START, MessagesState, StateGraph
 import os
 
 class Chatbot:
-    def __init__(self, instance, chatbot_api_db_path="./databases/chatbot_instances.db"):
+    def __init__(self, instance, chatbot_api_db_path="./databases/chatbot_instances.db", keep_memory=True):
         self.chatbot_id = instance["id"]
         self.name = instance["name"]
+        self.keep_memory = keep_memory
 
         project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
         vector_db_path = os.path.join(project_root, instance["vector_db_path"])
@@ -78,7 +79,10 @@ class Chatbot:
         """Create a user-specific workflow"""
         config = {"configurable": {"thread_id": "default"}}
         memory = MemorySaver()
-        user_name = UserController.get_user_by_id(user_id)['username']
+        user = UserController.get_user_by_id(user_id)
+        if not user:
+            raise ValueError(f"User with ID {user_id} not found")
+        user_name = user['username']
         self.user_apps[user_id] = self.workflow.compile(checkpointer=memory)
         self.user_apps[user_id].update_state(config, {"messages": [SystemMessage(content=f"You are talking to {user_name}.")]})
 
@@ -110,7 +114,7 @@ class Chatbot:
         ]
 
         # If conversation history is too long, summarize it
-        if len(conversation_history) >= MAX_MESSAGES:
+        if len(conversation_history) >= MAX_MESSAGES and self.keep_memory:
             # Clean history for summarization by removing metadata
             clean_history = [
                 {"role": "user" if isinstance(msg, HumanMessage) else "assistant", 
@@ -149,7 +153,8 @@ class Chatbot:
             return {
                 "messages_for_llm": messages_for_llm,
                 "state_updates": [summary_message, human_message] + delete_messages,
-                "user_prompt": user_message
+                "user_prompt": user_message,
+                "context": [doc.page_content for doc in docs] if docs else None
             }
         else:
             # Format the prompt with context for the current conversation
@@ -161,25 +166,101 @@ class Chatbot:
             # Use only the system message from formatted_messages and keep conversation history
             system_message = formatted_messages[0]  # The system message with context
             messages_for_llm = [system_message] + state["messages"]
-            
-            return {
-                "messages_for_llm": messages_for_llm,
-                "state_updates": None,
-                "user_prompt": user_message
-            }
 
-    
-    async def invoke(self, user_id, user_prompt):
-        """Get response as a stream using the LangGraph workflow with call_model_streaming"""
+            if self.keep_memory:
+                return {
+                    "messages_for_llm": messages_for_llm,
+                    "state_updates": None,
+                    "user_prompt": user_message,
+                    "context": [doc.page_content for doc in docs] if docs else None
 
-        user = UserController.get_user_by_id(user_id)
+                }
+            else:
+                return {
+                    "messages_for_llm": [system_message, HumanMessage(content=user_message)],
+                    "state_updates": None,
+                    "user_prompt": user_message,
+                    "context": [doc.page_content for doc in docs] if docs else None
+
+                }
+
+    def invoke(self, user_prompt, user_id=None):
+        """Get response"""
+        if not user_id:
+            user = UserController.get_guest_user(self.chatbot_id)
+        else:
+            user = UserController.get_user_by_id(user_id)
+
+        if not user:
+            raise ValueError(f"User not found for user_id: {user_id}")
 
         if user['username'] != "guest_user":
             UserController.add_user_history_entry(user_id, self.chatbot_id, str(user_prompt), "user")
 
         try:
             # Get user-specific app with dedicated memory for context
-            app = self.get_user_app(user_id)
+            app = self.get_user_app(user['id'])
+            config = {"configurable": {"thread_id": "default"}}
+
+            # Get current state to build context with new user message
+            current_state = app.get_state(config)
+            existing_messages = current_state.values.get("messages", []) if current_state.values else []
+            
+            # Add the new user message
+            user_message = HumanMessage(content=user_prompt)
+            all_messages = existing_messages + [user_message]
+            state_with_user_message = {"messages": all_messages}
+
+            # Prepare streaming context
+            streaming_data = self.prepare_streaming_context(state_with_user_message)
+            messages_for_llm = streaming_data["messages_for_llm"]
+            state_updates = streaming_data["state_updates"]
+            
+            response = self.generator.invoke(messages_for_llm)
+
+            # Create the AI response message
+            response_message = AIMessage(content=response)
+
+            # Update state based on whether we had summarisation or not
+            if state_updates:
+                final_state = {"messages": state_updates + [response_message]}
+            else:
+                final_state = {"messages": all_messages + [response_message]}
+            
+            # Update the LangGraph state
+            app.update_state(config, final_state)
+            
+            # Save to user history
+            if user['username'] != "guest_user":
+                UserController.add_user_history_entry(user_id, self.chatbot_id, str(response), "assistant")
+
+            if self.keep_memory:
+                return response
+            else:
+                return response, streaming_data["context"]
+
+        except Exception as error:
+            error = f"Error: {str(error)}"
+            print(error)
+            return error
+
+    async def stream(self, user_id, user_prompt):
+        """Get response as a stream using the LangGraph workflow with call_model_streaming"""
+
+        if not user_id:
+            user = UserController.get_guest_user(self.chatbot_id)
+        else:
+            user = UserController.get_user_by_id(user_id)
+
+        if not user:
+            raise ValueError(f"User not found for user_id: {user_id}")
+
+        if user['username'] != "guest_user":
+            UserController.add_user_history_entry(user_id, self.chatbot_id, str(user_prompt), "user")
+
+        try:
+            # Get user-specific app with dedicated memory for context
+            app = self.get_user_app(user['id'])
             config = {"configurable": {"thread_id": "default"}}
 
             # Get current state to build context with new user message

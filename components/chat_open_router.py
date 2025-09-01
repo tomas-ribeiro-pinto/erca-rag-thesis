@@ -8,6 +8,8 @@ from pydantic import Field, SecretStr
 
 load_dotenv()
 
+### https://github.com/langchain-ai/langchain/discussions/27964 
+
 class ChatOpenRouter(ChatOpenAI):
     openai_api_key: Optional[SecretStr] = Field(
         alias="api_key", default_factory=secret_from_env("OPENROUTER_API_KEY", default=None)
