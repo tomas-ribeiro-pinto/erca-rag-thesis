@@ -49,8 +49,7 @@ def test_rag(test_case: LLMTestCase):
         
         print(f"Initializing evaluation model...")
         # Use OpenAI GPT-4o-mini through OpenRouter for reliable JSON evaluation
-        evaluation_model = EvaluationChatbot(model="google/gemini-2.5-flash-image-preview:free")
-        #evaluation_model = EvaluationChatbot(model="openai/gpt-4o-mini")
+        evaluation_model = EvaluationChatbot(model="openai/gpt-4o-mini")
 
         print(f"Creating metrics...")
         answer_relevancy_metric = AnswerRelevancyMetric(model=evaluation_model)
